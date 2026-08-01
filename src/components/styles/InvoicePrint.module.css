@@ -1,0 +1,110 @@
+.mainContent{
+    width: 108mm;
+    height: auto;
+    
+    padding:15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.logo{
+    
+    width: 250px;
+    height: 250px;
+    
+}
+.logo img{
+    width: 100%;
+    height: 100%;
+}
+.heading{
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+    border-bottom: 2px solid black;
+    padding: 10px;
+}
+.subheading {
+    margin-top:10px;    
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom:2px solid #000;
+}
+.deleveryDtls{
+    margin-top:17px;
+    display: flex;
+    width: 100%;
+}
+.ddtlsleft{
+    flex: 1;
+    text-align: left;
+}
+.ddtlsright{
+    flex: 1;
+    text-align: right;
+}
+.itemContent{
+    
+}
+.itemContent{
+    padding:15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 2px solid #000;
+   
+}
+.itmDtls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 12px;
+    border-bottom: 1px solid #000;
+}
+.itmDtlsFigures{
+    display: flex;
+    margin-top:-7px;
+}
+.itmDtlsFiguresleft{
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #000;
+}
+.itmDtlsFiguresRight{
+    flex: 1;
+}
+.grdTotalSection{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+.invoiceFooter{
+    margin-top: 90px;
+    display: flex;
+    width: 100%;
+    gap:50px;
+
+}
+
+.invoiceFooterleft{
+    flex:1;
+    border-top:2px dotted #000;
+    text-align: center;
+}
+
+.invoiceFooterRight{
+    flex:1;
+    border-top:2px dotted #000;
+    text-align: center;
+}
+.btnPnl button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgb(90, 90, 90);
+    color: #ccc;
+    border-color: #888;
+}

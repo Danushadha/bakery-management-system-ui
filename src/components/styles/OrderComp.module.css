@@ -1,0 +1,445 @@
+.mainContent{
+    border: 2px solid #fff;
+    border-radius: 20px;
+    height: 86vh;
+    width: 600px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;  
+    margin-top: -33px;  
+    
+}
+.heading{
+    border-bottom: 2px solid #fff;
+    padding-bottom: 15px;
+    margin: 5px 15px;
+    width:90%;
+    text-align: center;
+}
+.deliveryContent{
+    border-bottom: 2px solid #fff;
+    padding-bottom: 5px;
+    margin: 5px 15px;
+    width:90%;
+    height: 150px;
+    position: relative;
+
+}
+.vehicleDrpDtls{
+    
+    position: absolute; 
+    top: 50%;
+    left:17%;
+    z-index: 10;
+    width: 150px;
+    height: 100px;
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-bottom-left-radius: 20px ;
+    border-bottom-right-radius: 20px ;
+    padding: 5px;
+    backdrop-filter: blur(12px);  
+    overflow-y: scroll;
+}
+
+.driverDrpDtls{
+    position: absolute; 
+    top: 49%;
+    left:58%;
+    z-index: 10;
+    width: 220px;
+    height: 100px;
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-bottom-left-radius: 20px ;
+    border-bottom-right-radius: 20px ;
+    padding: 5px;
+    backdrop-filter: blur(12px);  
+    overflow-y: scroll;
+
+
+
+}
+
+.deliveryContent h3{
+    display: flex;
+    justify-content: left;
+
+}
+
+.deliveryContentdtls{
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slctBtn {
+    width: 140px;
+    border: none;
+    background: transparent;
+    outline: none;
+    border-bottom: 2px solid #fff;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.drpdwwnbtn {
+    width:100%;
+    border: none;
+    background: transparent;
+    color: #fff;
+    text-align: left;
+    font-size: 18px;
+   
+}
+
+.dlvrDtlsPnl{
+    margin-top: 10px;
+    backdrop-filter: blur(12px);
+    display: flex;
+    font-size: 0.9rem;
+}
+.dlvrDtlsPnllft{
+    flex: 1;
+    border-right: 2px solid #fff;
+    max-width: 55%;
+}
+.dlvrDtlsPnlRight{
+    
+   padding-left: 10px;
+}
+
+
+.ItemContent{
+    width:90%;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.ItmDtlsContent{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.ItmDtlsBtn{
+
+    width:190px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #fff;
+    background: transparent;
+    color: #fff;
+    font-size: 17px;
+
+}
+
+.itemDtlsDrpdwn{
+    position: absolute; 
+    top: 63%;
+    left:35%;
+    z-index: 10;
+    width: 223px;
+    height: 150px;
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-bottom-left-radius: 18px ;
+    border-bottom-right-radius: 18px ;
+    padding: 10px;
+    backdrop-filter: blur(12px);  
+    overflow-y: scroll;
+
+}
+
+.itemDtlsPnl{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(12px);
+    margin-top: 10px;
+    overflow-y: scroll;
+    min-height:150px;
+}
+
+.grandtotal{
+   background-color:  rgb(41, 35, 35);
+   padding: 8px;
+   border-radius: 10px;
+   border: 1px solid #fff;
+   margin-left: 18px;
+}
+.itempnl{
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+    
+  
+}
+.itemDtlsName{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:5px;
+    border-right: 2px solid #fff;
+    
+}
+.adjQty{
+    flex: 1;
+    border-right: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+}
+.totlsDtls{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items:  center;
+}
+
+.qtyinput{
+    width: 40px;
+    margin: 0px 18px;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-bottom: 2px solid #fff;
+    color: #ffffff;
+    font-size: 18px;
+    height: 40px;
+    text-align: center;
+}
+
+.qtyBtn{
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-size: 18px;
+}
+
+.rmvBtn{
+    padding: 15px;    
+    border-left:2px solid rgb(41, 35, 35)
+}
+
+.rmvBtn Button{
+    outline: none;
+    border: none;
+    color: #fff;
+    background: transparent;
+}
+.vehicleDrpDtls::-webkit-scrollbar,
+.driverDrpDtls::-webkit-scrollbar ,
+.itemDtlsDrpdwn::-webkit-scrollbar{
+    width: 8px;
+}
+
+.btnPnl{
+    
+    width: 90%;
+    margin: 55px 10px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+.btnPnl button{
+    height: 40px;
+    width: 180px;
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 19px;
+    color: #fff;
+    background: transparent;
+    border: 2px solid #fff;
+}
+.btnPnl button:hover{
+    background-color: #fff;
+    color: rgb(97, 93, 93)
+}
+
+.vehicleDrpDtls::-webkit-scrollbar-track,
+.driverDrpDtls::-webkit-scrollbar-track,
+.itemDtlsDrpdwn::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 20px;
+}
+
+.vehicleDrpDtls::-webkit-scrollbar-thumb,
+.driverDrpDtls::-webkit-scrollbar-thumb,
+.itemDtlsDrpdwn ::-webkit-scrollbar-thumb{
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.vehicleDrpDtls::-webkit-scrollbar-thumb:hover,
+.driverDrpDtls::-webkit-scrollbar-thumb:hover,
+.itemDtlsDrpdwn::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.itemDtlsPnl {
+    overflow-y: auto;
+
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.6) transparent;
+}
+
+/* Chrome, Edge, Safari */
+.itemDtlsPnl::-webkit-scrollbar {
+    width: 8px;
+}
+
+.itemDtlsPnl::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+.itemDtlsPnl::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.itemDtlsPnl::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.8);
+}
+
+.qtyinput::-webkit-outer-spin-button,
+.qtyinput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.savedOrderPnl{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    margin-top: 5px;
+}
+.savedItemPnl{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    margin: 30px;
+    padding: 20px;
+    gap: 15px;
+}
+.printContainer{
+    display: none
+}
+.btnPnl button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgb(90, 90, 90);
+    color: #ccc;
+    border-color: #888;
+}
+@media print{
+    display: block;
+}
+@media (max-width: 1024px){
+    .mainContent{
+        height: 90vh;
+        width: 90vw;
+        padding: 80px ;
+    }
+
+     .mainContent h1{
+        font-size: 3rem;
+    }
+    .heading{
+        width:80vw;
+        margin-top: -40px;
+       
+    }
+    .deliveryContent{
+        width:80vw;
+        height: 350px;
+    }
+
+    .deliveryContent p{
+        font-size:  20px;
+    }
+
+    .deliveryContent h3
+    ,.ItemContent h3{
+        font-size:  1.9rem;
+    }
+    .deliveryContent button{
+        margin-top:10px;
+        width: 80%; 
+        font-size: 1.5rem;
+    }
+    .deliveryContentdtls{
+        width:100vw;
+        flex-direction: column;
+
+    }
+
+    .ItemContent{
+        width:80vw;
+        font-size: 22px;
+    }
+    .itemDtlsPnl{
+
+        min-height: 190px;
+        margin-top:30px; 
+        
+    }
+    .ItmDtlsContent p{
+        font-size: 1.5rem;
+    }
+
+    .itemDtlsDrpdwn{
+        top: 58%;
+        left:23%;
+        width:250px;
+        height: 180px;
+    }
+    .btnPannel button{
+        width: 54vw;
+        padding: 10px;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+    .itemDtlsDrpdwn button{
+        font-size: 1.6rem;
+        margin-top:10px; 
+    }
+
+   .driverDrpDtls{
+        width:100%;
+        left:0%;
+        top:60%;
+   }
+    .vehicleDrpDtls{
+        width:100%;
+        left:0%;
+        top:40%;
+        z-index: 15;
+    }
+
+    .grandtotal{
+        padding: 5px;
+    }
+    .grandtotal p{
+        font-size: 1rem;
+    }
+
+    .btnPnl{
+        margin: 245px 10px 0px 0px;
+    }
+ }

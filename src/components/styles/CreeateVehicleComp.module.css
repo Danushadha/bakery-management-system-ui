@@ -1,0 +1,135 @@
+.mainContent{
+    border-radius: 20px;
+    height: 50vh;
+    width: 100%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.formContent{
+    width: 100%;
+    display: flex;
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    
+}
+
+.formSide{
+
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px; 
+}
+
+.formSide h1{
+
+    text-align: center;
+}
+.formRow{
+    display: flex;
+    margin-top:50px; 
+}
+
+.formRow label{
+    width:130px;
+    font-size: 1.1rem;
+}
+
+
+.formRow input{
+    flex: 1;
+    background: transparent;
+    outline: none;
+    border: none;
+    color: #fff;
+    border-bottom: 2px solid #fff;
+    font-size: 1.1rem;
+}
+
+
+.btnPannel{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.btnPannel button{
+
+    background:transparent;
+    border: none;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    padding: 8px;
+    width: 200px;
+    color: #fff;
+    font-size: 1.1rem;
+    
+
+}
+.btnPannel button:hover{
+
+    background: #fff;
+    color: rgb(0, 0, 0);
+    
+}
+
+
+.imgside{
+    flex: 1;
+    height: 50vh;
+    clip-path: polygon(10% 0%,100% 0%,100% 100%,0% 100%);
+   
+}
+
+
+.imgside img{
+
+    width: 100%;
+    height: 100%;
+    border-bottom-right-radius:20px;
+    border-top-right-radius: 20px;
+    object-fit: cover;
+    
+}
+
+
+
+@media (max-width: 1024px){
+    .mainContent{
+        height: 85vh;
+        width: 90vw;
+        padding: 80px ;
+    }
+
+     .mainContent h1{
+        font-size: 3rem;
+    }
+
+    .formRow{
+        flex-direction: column;
+        gap: 40px;
+        align-items: flex-start;
+    }
+
+    .formRow label{
+        font-size: 1.5rem;
+        width: 100%;
+
+    }
+
+    .formContent input{
+        font-size: 2rem;
+        width: 100%;
+    }
+
+    .btnPannel button{
+        width: 54vw;
+        padding: 10px;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+    
+ }
