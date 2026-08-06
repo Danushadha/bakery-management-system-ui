@@ -13,6 +13,9 @@ function CreateOrderComponent() {
 
     const [showDrpDwn, setShowDrpDwn] = useState(false)
     const [vehicle, setVehicle] = useState<VehicleDtls[]>([])
+    const [isMorningSaved, setIsMorningSaved] = useState(false);
+    const [isEveningSaved, setIsEveningSaved] = useState(false);
+    const [isOrderClosed, setIsOrderClosed] = useState(false);
 
 
     const [order, setOrder] = useState({
@@ -116,14 +119,24 @@ function CreateOrderComponent() {
 
         //here map sets key value pairs
         //key will be itemId and value will be qty
-        const qtyMap = new Map<number, number>(
+        const MqtyMap = new Map<number, number>(
 
             savedOrder.morningItemsResponseDto.map((item: any) => [
 
                 item.itemId,
                 item.qty
-            ])
+            ])           
 
+
+        )
+
+        const EqtyMap = new Map<number, number>(
+
+            savedOrder.eveningItemsResponseDto.map((item: any) => [
+
+                item.itemId,
+                item.qty
+            ])
 
         )
 
@@ -135,7 +148,12 @@ function CreateOrderComponent() {
             vehicle: savedOrder.vehicle,
             morningItems: prev.morningItems.map(item => ({
                 ...item,
-                qty: qtyMap.get(item.id) ?? 0
+                qty: MqtyMap.get(item.id) ?? 0
+            })),
+
+            eveningItems: prev.eveningItems.map(item => ({
+                ...item,
+                qty: EqtyMap.get(item.id) ?? 0
             }))
         }))
 
@@ -335,6 +353,8 @@ function CreateOrderComponent() {
 
             }))
 
+            setIsMorningSaved(true)
+
         }
 
         catch (error) {
@@ -368,12 +388,46 @@ function CreateOrderComponent() {
 
           const response =  await saveEveningOrder(eveningPayload)
           console.log("evening response", response.data)
+          const savedOrder = response.data
+
+          setOrder(prev=>({
+              ...prev,
+              orderId:savedOrder.id,
+              orderNo:savedOrder.orderNo,
+              vehicle:savedOrder.vehicle,
+
+              eveningItems:prev.eveningItems.map(item=>{
+
+                const savedItem = savedOrder.eveningItemsResponseDto.find(
+                    (i: any) => i.itemId === item.id)
+
+                    return {
+                        ...item,
+                        qty: savedItem ? savedItem.qty : 0
+                    }
+
+              })
+
+          }))
+
+          setIsEveningSaved(true)
 
         }
 
         catch(error){
             console.log(error)
         }
+    }
+
+    const closeOrder = () =>{
+
+        setIsEveningSaved(true)
+        setIsMorningSaved(true)
+        setIsOrderClosed(true)
+
+
+
+
     }
 
     return (
@@ -459,11 +513,13 @@ function CreateOrderComponent() {
                                                 <small>@Rs. {Number(item.price).toFixed(2)}</small>
                                             </td>
                                             <td>
-                                                <button className={styles.QtyBtn} onClick={() => decreaseQty(item.id, "morning")}>-</button>
+                                                <button className={styles.QtyBtn} onClick={() => decreaseQty(item.id, "morning") }disabled={isMorningSaved} >-</button>
                                                 <input type="number" className={styles.qtyInput}
-                                                    value={item.qty}
-                                                    onChange={(e) => handleQtyChange(item.id, e.target.value, "morning")} />
-                                                <button className={styles.QtyBtn} onClick={() => increaseQty(item.id, "morning")}>+</button>
+                                                   value={item.qty}
+                                                   onChange={(e) => handleQtyChange(item.id, e.target.value, "morning")} 
+                                                   disabled={isMorningSaved}/>
+
+                                                <button className={styles.QtyBtn} onClick={() => increaseQty(item.id, "morning")} disabled={isMorningSaved}>+</button>
                                             </td>
                                             <td>Rs. {(Number(item.price) * Number(item.qty)).toFixed(2)}</td>
                                         </tr>
@@ -477,8 +533,8 @@ function CreateOrderComponent() {
 
                     </div>
                     <div className={styles.btnPnl}>
-                        <button className={styles.shiftBtn} >Edit</button>
-                        <button className={styles.shiftBtn} onClick={saveorderMorning}>Save</button>
+                        <button className={styles.shiftBtn} disabled={!order.orderId} onClick={()=> setIsMorningSaved(false)} >Edit</button>
+                        <button className={styles.shiftBtn} onClick={saveorderMorning} disabled ={isMorningSaved}>Save</button>
 
                     </div>
 
@@ -507,12 +563,12 @@ function CreateOrderComponent() {
                                                 <small>@Rs. {Number(item.price).toFixed(2)}</small>
                                             </td>
                                             <td>
-                                                <button className={styles.QtyBtn} onClick={() => decreaseQty(item.id, "evening")}>-</button>
+                                                <button className={styles.QtyBtn} onClick={() => decreaseQty(item.id, "evening")}disabled={isEveningSaved}>-</button>
                                                 <input type="number" className={styles.qtyInput}
                                                     value={item.qty}
-                                                    onChange={(e) => handleQtyChange(item.id, e.target.value, "evening")}
+                                                    onChange={(e) => handleQtyChange(item.id, e.target.value, "evening")} disabled={isEveningSaved}
                                                 />
-                                                <button className={styles.QtyBtn} onClick={() => increaseQty(item.id, "evening")}>+</button>
+                                                <button className={styles.QtyBtn} onClick={() => increaseQty(item.id, "evening")} disabled={isEveningSaved}>+</button>
                                             </td>
                                             <td>Rs. {(Number(item.price) * Number(item.qty)).toFixed(2)}</td>
                                         </tr>
@@ -527,8 +583,8 @@ function CreateOrderComponent() {
                     </div>
                     <div className={styles.btnPnl}>
 
-                        <button className={styles.shiftBtn}>Edit</button>
-                        <button className={styles.shiftBtn}  onClick={saveOrderEvening}>Save</button>
+                        <button className={styles.shiftBtn}  disabled={!order.orderId || isOrderClosed} onClick={()=> setIsEveningSaved(false)}>Edit</button>
+                        <button className={styles.shiftBtn}  onClick={saveOrderEvening} disabled ={isEveningSaved}>Save</button>
 
                     </div>
 
@@ -592,7 +648,7 @@ function CreateOrderComponent() {
 
             </div>
             <div className={styles.mainBtnPannel}>
-                <button className={styles.mainBtnPannelBtn} >Close Order</button>
+                <button className={styles.mainBtnPannelBtn} onClick={()=> closeOrder()} >Close Order</button>
                 <button className={styles.mainBtnPannelBtn} >Print Order</button>
 
             </div>
