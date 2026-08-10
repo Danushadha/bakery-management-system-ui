@@ -44,7 +44,23 @@ export interface OrderResponseDto{
     orderNo:string;
     orderDate:string;
     totalAmount:number;
-    driver:DriverData;
     vehicle:VehicleDtls;
-    orderedItemsResponseDto: OrderedItemsResponseDto[]
+    orderStatus:string;
+    orderedItemsResponseDto: OrderedItemsResponseDto[];
+    morningTotal:number;
+    eveningTotal:number;
+    grandTotal:number;
+}
+
+export interface PrintOrderData{
+    id:number;
+    orderNo:string;
+    orderDate:string;
+    vehicle:VehicleDtls;
+    status:string;
+    morningTotal:number;
+    eveningTotal:number;
+    grandtotal:number;
+    morningItemsResponseDto:OrderedItemsResponseDto[];
+    eveningItemsResponseDto:OrderedItemsResponseDto[];
 }

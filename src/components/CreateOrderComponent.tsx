@@ -1,11 +1,15 @@
 import styles from "./styles/CreateOrderComponent.module.css"
-import { useState, useEffect } from "react"
-import type { ItemData, VehicleDtls } from "../utils/type"
+import { useState, useEffect, useRef} from "react"
+import {useReactToPrint} from "react-to-print"
+import type { ItemData, VehicleDtls , PrintOrderData } from "../utils/type"
 import { getAllItems } from "../api/itemApi"
 import { getAllVcl } from "../api/vhclApi"
 import { saveMorningOrder } from "../api/orderApi"
 import { saveEveningOrder } from "../api/orderApi"
 import { getTodayOrder } from "../api/orderApi"
+import { getCloseAndInvoiceDtls } from "../api/orderApi"
+import PrintOrder from "../components/PrintOrder"
+
 
 
 
@@ -15,17 +19,37 @@ function CreateOrderComponent() {
     const [vehicle, setVehicle] = useState<VehicleDtls[]>([])
     const [isMorningSaved, setIsMorningSaved] = useState(false);
     const [isEveningSaved, setIsEveningSaved] = useState(false);
-    const [isOrderClosed, setIsOrderClosed] = useState(false);
 
+    const [printOrder, setPrintOrder] = useState<PrintOrderData>({})
+
+    const printRef = useRef<HTMLDivElement>(null)
 
     const [order, setOrder] = useState({
         orderId: null as number | null,
         orderNo: "",
+        orderStatus: "",
+        orderDate: "",
         vehicle: null as VehicleDtls | null,
         morningItems: [] as ItemData[],
-        eveningItems: [] as ItemData[]
+        eveningItems: [] as ItemData[],
+        morningTotal:null as number | null,
+        eveningTotal:null as number | null,
+        grandTotal:null as number | null
 
     })
+
+    const formatDateTime = (dateTime: string) => {
+        if (!dateTime) return "";
+
+        return new Date(dateTime).toLocaleString("en-LK", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+        });
+    };
 
 
     useEffect(() => {
@@ -79,6 +103,9 @@ function CreateOrderComponent() {
     }
     const handleSelectVehicle = async (vehicle: VehicleDtls) => {
 
+        setIsMorningSaved(false)
+        setIsEveningSaved(false)
+
         setOrder(prev => ({
             ...prev,
             vehicle: vehicle
@@ -125,8 +152,7 @@ function CreateOrderComponent() {
 
                 item.itemId,
                 item.qty
-            ])           
-
+            ])
 
         )
 
@@ -146,6 +172,9 @@ function CreateOrderComponent() {
             orderId: savedOrder.id,
             orderNo: savedOrder.orderNo,
             vehicle: savedOrder.vehicle,
+            orderStatus: savedOrder.status,
+            orderDate: savedOrder.orderDate,
+
             morningItems: prev.morningItems.map(item => ({
                 ...item,
                 qty: MqtyMap.get(item.id) ?? 0
@@ -167,6 +196,8 @@ function CreateOrderComponent() {
             orderId: null,
             orderNo: "",
             vehicle,
+            orderStatus: "",
+            orderDate: "",
             morningItems: prev.morningItems.map(item => ({
                 ...item,
                 qty: 0
@@ -301,16 +332,17 @@ function CreateOrderComponent() {
 
     const grandTotal = morningTotal + eveningTotal;
 
-    
 
-    
+
+
 
     const saveorderMorning = async () => {
 
         if (!order.vehicle) {
-            alert("Please select a vehicle.");
+            alert("Please select a vehicle...");
             return;
         }
+
 
         const morningPayload = {
 
@@ -322,20 +354,22 @@ function CreateOrderComponent() {
                     itemId: item.id,
                     qty: Number(item.qty)
                 }))
-    
+
         }
 
         try {
             const response = await saveMorningOrder(morningPayload)
-            console.log("morning response" , response.data)
+            console.log("morning response", response.data)
 
             const saveOrder = response.data
-          
+
             setOrder(prev => ({
                 ...prev,
                 orderId: saveOrder.id,
                 orderNo: saveOrder.orderNo,
                 vehicle: saveOrder.vehicle,
+                orderStatus: saveOrder.status,
+                orderDate: saveOrder.orderDate,
 
                 morningItems: prev.morningItems.map(item => {
 
@@ -364,7 +398,7 @@ function CreateOrderComponent() {
 
     }
 
-    const saveOrderEvening = async()=>{
+    const saveOrderEvening = async () => {
 
         if (!order.vehicle) {
             alert("Please select a vehicle.");
@@ -381,57 +415,167 @@ function CreateOrderComponent() {
                     itemId: item.id,
                     qty: Number(item.qty)
                 }))
-    
+
         }
 
-        try{
+        try {
 
-          const response =  await saveEveningOrder(eveningPayload)
-          console.log("evening response", response.data)
-          const savedOrder = response.data
+            const response = await saveEveningOrder(eveningPayload)
+            console.log("evening response", response.data)
+            const savedOrder = response.data
 
-          setOrder(prev=>({
-              ...prev,
-              orderId:savedOrder.id,
-              orderNo:savedOrder.orderNo,
-              vehicle:savedOrder.vehicle,
+            setOrder(prev => ({
+                ...prev,
+                orderId: savedOrder.id,
+                orderNo: savedOrder.orderNo,
+                vehicle: savedOrder.vehicle,
+                orderStatus: savedOrder.status,
 
-              eveningItems:prev.eveningItems.map(item=>{
+                eveningItems: prev.eveningItems.map(item => {
 
-                const savedItem = savedOrder.eveningItemsResponseDto.find(
-                    (i: any) => i.itemId === item.id)
+                    const savedItem = savedOrder.eveningItemsResponseDto.find(
+                        (i: any) => i.itemId === item.id)
 
                     return {
                         ...item,
                         qty: savedItem ? savedItem.qty : 0
                     }
 
-              })
+                })
 
-          }))
+            }))
 
-          setIsEveningSaved(true)
+            setIsEveningSaved(true)
 
         }
 
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }
+    const getShiftDisplay = () => {
 
-    const closeOrder = () =>{
+        const hasMorning = order.morningItems.some(item => Number(item.qty) > 0)
+        const hasEvening = order.eveningItems.some(item => Number(item.qty) > 0)
 
-        setIsEveningSaved(true)
-        setIsMorningSaved(true)
-        setIsOrderClosed(true)
+        let shift = "No shift selected"
 
 
+        if (hasMorning) {
+            shift = "Morning"
+        }
+
+        if (hasEvening) {
+            shift = "Evening"
+        }
+
+        if (hasMorning && hasEvening) {
+
+            shift = "Morning & Evening Both"
+        }
+
+        return shift
 
 
     }
 
+    const totalItems =
+        order.morningItems.reduce(
+            (total, item) => total + Number(item.qty || 0),
+            0
+        ) +
+        order.eveningItems.reduce(
+            (total, item) => total + Number(item.qty || 0),
+            0
+        );
+
+        
+
+    const closeOrder = async () => {
+
+        console.log(order.orderId)
+
+        if (!order.orderId) {
+            alert("You have not saved the order");
+            return
+        }
+
+        try {
+
+            const response = await getCloseAndInvoiceDtls(order.orderId)
+            console.log(response.data)
+
+            const closedOrder = response.data
+
+            setPrintOrder(closedOrder)
+
+            //     const mnQtyMap = new Map<number , number>(
+            //         closedOrder.morningItemsResponseDto.map((item:any)=>[
+            //             item.itemId , item.qty
+            //         ])
+            //     )
+
+
+            //     const evQtyMap = new Map<number , number>(
+            //         closedOrder.eveningItemsResponseDto.map((item:any)=>[
+            //             item.itemId , item.qty
+            //         ])
+            //     )
+    
+
+            // setOrder(prev => ({
+
+            //     ...prev,
+            //     orderId: closedOrder.id,
+            //     orderNo: closedOrder.orderNo,
+            //     vehicle: closedOrder.vehicle,
+            //     orderStatus: closedOrder.status,
+            //     orderDate:closedOrder.orderDate,
+            //     morningTotal:closedOrder.morningTotal,
+            //     eveningTotal:closedOrder.eveningTotal,
+            //     grandTotal:closedOrder.grandtotal,
+
+            //     morningItems:prev.morningItems.map(item=>({
+
+            //         ...item,
+            //         qty:mnQtyMap.get(item.id) ?? 0
+            //     })),
+
+            //     eveningItems:prev.eveningItems.map(item=>({
+
+            //         ...item,
+            //         qty:evQtyMap.get(item.id) ?? 0
+            //     }))
+
+                
+
+            // }))
+
+        }
+        catch (error) {
+            console.log(error)
+
+        }
+
+        setIsEveningSaved(true)
+        setIsMorningSaved(true)
+
+
+    }
+
+    const handlePrint = useReactToPrint({
+
+        contentRef:printRef,
+        documentTitle: "Invoice"
+    })
+
+
+
+
     return (
         <>
+
+        <PrintOrder ref={printRef} printOrder={printOrder}/>
 
 
             <div className={styles.mainDiv}>
@@ -476,15 +620,20 @@ function CreateOrderComponent() {
                             <p>Order Date </p>
                             <p>Total Items</p>
                             <p>Shift </p>
+                            <p>Order Status</p>
 
 
                         </div>
                         <div className={styles.ordSumRight}>
                             <p>{order.vehicle ?.vehicleNumber}</p>
                             <p>{order ?.orderNo}</p>
+                            <p>{formatDateTime(order ?.orderDate)}</p>
+                            <p>{totalItems}</p>
+                            <p>{getShiftDisplay()}</p>
+                            <p>{order ?.orderStatus}</p>
 
                         </div>
-
+                            
                     </div>
 
 
@@ -513,13 +662,13 @@ function CreateOrderComponent() {
                                                 <small>@Rs. {Number(item.price).toFixed(2)}</small>
                                             </td>
                                             <td>
-                                                <button className={styles.QtyBtn} onClick={() => decreaseQty(item.id, "morning") }disabled={isMorningSaved} >-</button>
+                                                <button className={styles.QtyBtn} onClick={() => decreaseQty(item.id, "morning")} disabled={isMorningSaved || order.orderStatus === "CLOSE"} >-</button>
                                                 <input type="number" className={styles.qtyInput}
-                                                   value={item.qty}
-                                                   onChange={(e) => handleQtyChange(item.id, e.target.value, "morning")} 
-                                                   disabled={isMorningSaved}/>
+                                                    value={item.qty}
+                                                    onChange={(e) => handleQtyChange(item.id, e.target.value, "morning")}
+                                                    disabled={isMorningSaved || order.orderStatus === "CLOSE"} />
 
-                                                <button className={styles.QtyBtn} onClick={() => increaseQty(item.id, "morning")} disabled={isMorningSaved}>+</button>
+                                                <button className={styles.QtyBtn} onClick={() => increaseQty(item.id, "morning")} disabled={isMorningSaved || order.orderStatus === "CLOSE"}>+</button>
                                             </td>
                                             <td>Rs. {(Number(item.price) * Number(item.qty)).toFixed(2)}</td>
                                         </tr>
@@ -533,8 +682,8 @@ function CreateOrderComponent() {
 
                     </div>
                     <div className={styles.btnPnl}>
-                        <button className={styles.shiftBtn} disabled={!order.orderId} onClick={()=> setIsMorningSaved(false)} >Edit</button>
-                        <button className={styles.shiftBtn} onClick={saveorderMorning} disabled ={isMorningSaved}>Save</button>
+                        <button className={styles.shiftBtn} disabled={!order.orderId || order.orderStatus === "CLOSE"} onClick={() => setIsMorningSaved(false)} >Edit</button>
+                        <button className={styles.shiftBtn} onClick={saveorderMorning} disabled={isMorningSaved || order.orderStatus === "CLOSE"}>Save</button>
 
                     </div>
 
@@ -563,12 +712,12 @@ function CreateOrderComponent() {
                                                 <small>@Rs. {Number(item.price).toFixed(2)}</small>
                                             </td>
                                             <td>
-                                                <button className={styles.QtyBtn} onClick={() => decreaseQty(item.id, "evening")}disabled={isEveningSaved}>-</button>
+                                                <button className={styles.QtyBtn} onClick={() => decreaseQty(item.id, "evening")} disabled={isEveningSaved || order.orderStatus === "CLOSE"}>-</button>
                                                 <input type="number" className={styles.qtyInput}
                                                     value={item.qty}
-                                                    onChange={(e) => handleQtyChange(item.id, e.target.value, "evening")} disabled={isEveningSaved}
+                                                    onChange={(e) => handleQtyChange(item.id, e.target.value, "evening")} disabled={isEveningSaved || order.orderStatus === "CLOSE"}
                                                 />
-                                                <button className={styles.QtyBtn} onClick={() => increaseQty(item.id, "evening")} disabled={isEveningSaved}>+</button>
+                                                <button className={styles.QtyBtn} onClick={() => increaseQty(item.id, "evening")} disabled={isEveningSaved || order.orderStatus === "CLOSE"}>+</button>
                                             </td>
                                             <td>Rs. {(Number(item.price) * Number(item.qty)).toFixed(2)}</td>
                                         </tr>
@@ -583,8 +732,8 @@ function CreateOrderComponent() {
                     </div>
                     <div className={styles.btnPnl}>
 
-                        <button className={styles.shiftBtn}  disabled={!order.orderId || isOrderClosed} onClick={()=> setIsEveningSaved(false)}>Edit</button>
-                        <button className={styles.shiftBtn}  onClick={saveOrderEvening} disabled ={isEveningSaved}>Save</button>
+                        <button className={styles.shiftBtn} disabled={!order.orderId || order.orderStatus === "CLOSE"} onClick={() => setIsEveningSaved(false)}>Edit</button>
+                        <button className={styles.shiftBtn} onClick={saveOrderEvening} disabled={isEveningSaved || order.orderStatus === "CLOSE"}>Save</button>
 
                     </div>
 
@@ -648,8 +797,8 @@ function CreateOrderComponent() {
 
             </div>
             <div className={styles.mainBtnPannel}>
-                <button className={styles.mainBtnPannelBtn} onClick={()=> closeOrder()} >Close Order</button>
-                <button className={styles.mainBtnPannelBtn} >Print Order</button>
+                <button className={styles.mainBtnPannelBtn} onClick={() => closeOrder()} >Close Order</button>
+                <button className={styles.mainBtnPannelBtn} onClick ={handlePrint}>Print Order</button>
 
             </div>
         </>

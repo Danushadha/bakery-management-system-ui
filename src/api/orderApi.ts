@@ -14,3 +14,7 @@ export const getTodayOrder = async(vehicleId:number)=>{
     return await api.get(`/api/orderControler/today/${vehicleId}`)
 }
 
+export const getCloseAndInvoiceDtls = async(orderId:number)=>{
+    return await api.get(`/api/orderControler/closeOrder/${orderId}`)
+}
+

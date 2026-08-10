@@ -91,17 +91,21 @@
     flex-direction: row;
     border-top: 2px solid #fff;
     padding-top: 10px;
+    gap: 5px;
+    overflow: auto;
 }
 .ordSumleft{
     flex:1;
     text-align: left;
     line-height:30px;
-}
+    width: 40px;
+}   
 
 .ordSumRight{
-    flex:1;
+    flex:2;
     text-align: left;
     line-height:30px;
+    width: 250px;
 }
 .morningShift{
     flex:2;
