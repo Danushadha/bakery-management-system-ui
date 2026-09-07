@@ -6,7 +6,7 @@
     .mainDiv{
 
         width: 100mm;
-        border: 2px solid black;
+        
         padding: 10px;
         height: auto;
         display: flex;
@@ -66,9 +66,59 @@
 }
 
 .itemDiv{
-    margin-top: 10px;
+    margin: 10px 0px;
+    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
+    border-bottom: 1px solid black;
+}
+
+.itemTable th:nth-child(1),
+.itemTable th:nth-child(2),
+.itemTable th:nth-child(3){
+text-align: left;
+}
+.itemTable th:nth-child(4){
+    text-align: right;
+}
+
+.itemTable td:nth-child(4){
+    text-align: right;
+}
+
+.moriningToaldiv{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 2px solid black;
+}
+
+.eveningToaldiv{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.grdtotalDiv{
+
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 2px solid black;
+
+}
+
+.signatureDiv{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 100px;
+    padding: 0 10px;
+}
+.signatureBox{
+
+    width: 45%;
+    border-top:1px dotted black;
+    text-align: center;
 }
 
 }

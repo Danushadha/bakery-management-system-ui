@@ -1,6 +1,6 @@
 import ItemComp from "../components/CreateIteComp"
 import VehicleComp from "../components/CreeateVehicleComp"
-import Driver from "../components/CreateDriverComp"
+import CreateUserComp from "../components/CreateUserComp"
 import styles from "../components/styles/SettingsComp.module.css"
 function SettingsComp() {
 
@@ -10,7 +10,7 @@ function SettingsComp() {
             <div className={styles.mainDiv}>
                 <ItemComp />
                 <VehicleComp />
-                <Driver />
+                <CreateUserComp />
             </div>
 
         </>

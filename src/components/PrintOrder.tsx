@@ -1,27 +1,18 @@
 import { forwardRef } from "react"
-import type { ItemData, VehicleDtls } from "../utils/type"
+import type { PrintOrderData } from "../utils/type"
 import styles from "../components/styles/PrintOrder.module.css"
 import logo from "../assets/images/NBLogo.png"
 
-type PrintOrderData = {
-
-    orderId: number | null
-    orderNo: string
-    orderStatus: string
-    orderDate: string
-    vehicle: VehicleDtls | null
-    morningItems: ItemData[]
-    eveningItems: ItemData[]
-    morningTotal: number | null
-    eveningTotal: number | null
-    grandTotal: number | null
-}
 
 type PrintOrderProps = {
-    printOrder: PrintOrderData
+    printOrder: PrintOrderData | null
 }
 
 const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, ref) => {
+
+    if (!printOrder) {
+        return <div ref={ref} className={styles.mainDiv}></div>
+    }
 
     const formatDateTime = (dateTime: string) => {
         if (!dateTime) return "";
@@ -35,10 +26,12 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
             hour12: true
         });
     };
+
+    const hasMorning = printOrder.morningItemsResponseDto.some(item => Number(item.qty) > 0)
+    const hasEvening = printOrder.eveningItemsResponseDto.some(item => Number(item.qty) > 0)
+
     const getShiftDisplay = () => {
 
-        const hasMorning = printOrder.morningItems.some(item => Number(item.qty) > 0)
-        const hasEvening = printOrder.eveningItems.some(item => Number(item.qty) > 0)
 
         let shift = "No shift selected"
 
@@ -77,17 +70,17 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
                 </div>
                 <div className={styles.orderDtlsHeading}>
                     <h3>{printOrder.orderNo}</h3>
-                    <p>{formatDateTime(printOrder?.orderDate)}</p>
+                    <p>{formatDateTime(printOrder.orderDate)}</p>
 
                     <div className={styles.orderContDtlsHeading}>
 
                         <div className={styles.orderContDtlsHeadingleft}>
-                            <p> <strong>Vehicle No:- </strong> {printOrder ?.vehicle ?.vehicleNumber}</p>
-                            <p> <strong>Driver Name:- </strong> {printOrder ?.vehicle ?.driverName}</p>
+                            <p> <strong>Vehicle No:- </strong> {printOrder.vehicle.vehicleNumber}</p>
+                            <p> <strong>Driver Name:- </strong> {printOrder.vehicle.driverName}</p>
                         </div>
 
                         <div className={styles.orderContDtlsHeadingRight}>
-                            <p> <strong>Order Status:- </strong> {printOrder.orderStatus}</p>
+                            <p> <strong>Order Status:- </strong> {printOrder.status}</p>
                             <p> <strong>Shift:- </strong> {getShiftDisplay()}</p>
 
                         </div>
@@ -98,29 +91,41 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
 
                 <div className={styles.itemDiv}>
 
-                    <p><strong><em>Morning Items</em></strong></p>
+                    {hasMorning && (
+                        <p><strong><em>Morning Items</em></strong></p>
+
+                    )}
+
+
 
                     <table className={styles.itemTable}>
 
                         <thead>
-                            <th>Item Name</th>
-                            <th>Unit Price</th>
-                            <th>Qty</th>
-                            <th>Total</th>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Unit Price</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+
+                            </tr>
+
                         </thead>
 
                         <tbody>
-                            {
-                                order.morningItems.map(item => (
-                                    <tr key={item.id}>
+                            {hasMorning && (
+                                printOrder.morningItemsResponseDto.map(item => (
+                                    <tr key={item.itemId}>
 
                                         <td>{item.itemName}</td>
-                                        <td>{Number(item.price).toFixed(2)}</td>
+                                        <td>{Number(item.unitPrice).toFixed(2)}</td>
                                         <td>{item.qty}</td>
+                                        <td>{Number(item.lineTotal).toFixed(2)}</td>
 
 
                                     </tr>
                                 ))
+                            )
+
                             }
                         </tbody>
 
@@ -128,10 +133,118 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
 
                 </div>
 
+                <div className={styles.moriningToaldiv}>
+
+                    {hasMorning && (
+                        <>
+                            <p><strong>Morning Total</strong> </p>
+
+                            {Number(printOrder.morningTotal).toFixed(2)}
+                        </>
+
+                    )}
+
+
+                </div>
+
+
+                {/* Evening table */}
+
+
+                {hasEvening && (
+
+                    <>
+                        <div className={styles.itemDiv}>
+
+
+                            <p><strong><em>Evening Items</em></strong></p>
+
+
+
+
+                            <table className={styles.itemTable}>
+
+                                <thead>
+                                    <tr>
+                                        <th>Item Name</th>
+                                        <th>Unit Price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                    {hasEvening && (
+                                        printOrder.eveningItemsResponseDto.map(item => (
+                                            <tr key={item.itemId}>
+
+                                                <td>{item.itemName}</td>
+                                                <td>{Number(item.unitPrice).toFixed(2)}</td>
+                                                <td>{item.qty}</td>
+                                                <td>{Number(item.lineTotal).toFixed(2)}</td>
+
+
+                                            </tr>
+                                        ))
+                                    )
+
+                                    }
+                                </tbody>
+
+                            </table>
+
+
+
+
+
+
+                        </div>
+                    </>
+                )}
+
+                <div className={styles.eveningToaldiv}>
+
+                    {hasEvening && (
+                        <>
+                            <p><strong>Evening Total</strong> </p>
+
+                            {Number(printOrder.eveningTotal).toFixed(2)}
+
+
+                        </>
+
+                    )}
+
+
+
+                </div>
+                <div className={styles.grdtotalDiv}>
+
+                    <p><strong>Grand Total</strong> </p>
+
+                    {Number(printOrder.grandtotal).toFixed(2)}
+
+                </div>
+
+                <div className={styles.signatureDiv}>
+
+                    <div className={styles.signatureBox}>
+
+                       
+                        <p>Prepared By</p>
+                    </div>
+                    <div className={styles.signatureBox}>
+                        
+                        <p>Approved By</p>
+                    </div>
+                </div>
 
 
 
             </div>
+
 
         </>
 

@@ -74,7 +74,7 @@ function CreateIteComp() {
 
                         </div>
                         <div className={styles.btnPannel}>
-                            <button onClick={saveItemdtls}>Save Details</button>
+                            <button onClick={saveItemdtls}>Save Item</button>
 
                         </div>
 

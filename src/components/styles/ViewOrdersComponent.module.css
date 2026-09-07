@@ -1,0 +1,196 @@
+.mainDiv{
+
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;   
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    
+   
+}
+
+.orderSelectDiv{
+    flex:1;
+    height: 450px;
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    border-radius: 20px;
+    border:1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.08);
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+
+}
+
+.searchDate{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.calendar {
+    transform: translateX(36px);
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+.datePicker{
+    width: 180px;
+    background: rgba(160, 157, 157, 0.08);
+    border: none;
+    border-bottom: 2px solid #fff;
+    outline:none;
+    padding: 5px;
+    color: #fff;
+}
+.datePicker::placeholder {
+    color:#fff;
+}
+
+/* Calendar */
+
+
+.calendar :global(.react-datepicker__current-month) {
+    color: #ffff;
+    
+}
+.calendar :global(.react-datepicker__header) {
+    background: transparent;
+    backdrop-filter: blur(10px);
+    background-color: rgba(10, 10, 10, 0.4);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 19px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    
+}
+.calendar :global(.react-datepicker__month-container) {
+    background: transparent !important;
+    border-radius: 0 0 15px 15px;
+    overflow: hidden;   
+}
+
+.calendar :global(.react-datepicker__day--outside-month) {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Selected / range */
+
+.calendar :global(.react-datepicker__day--selected),
+.calendar :global(.react-datepicker__day--in-range) {
+    background: cadetblue;
+    color: #fff;
+}
+
+.calendar :global(.react-datepicker__day) {
+    color: #fff;
+}
+
+.calendar :global(.react-datepicker__day-name) {
+    color: #fff !important;
+}
+
+
+/* Hover */
+
+.calendar :global(.react-datepicker__day:hover) {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+
+.searchBtn{
+    width: 60px;
+    border-radius: 10px;
+    padding: 5px;
+    color: #fff;
+    background-color: cadetblue;
+}
+
+.selectedorders{
+    width:100%;
+    height: 440px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+   
+}
+.vehicleBtn{
+    width: 100%;
+    height: 30px;
+    text-align: initial;
+    background-color: transparent;
+    color: #fff;
+    font-size: 16px;
+    margin:10px;
+    transition:
+        border-bottom 0.3s ease,
+        text-align 0.3s ease,
+        font-style 0.3s ease;
+}
+.vehicleBtn:hover{
+    border-bottom: 1px solid #fff;
+    text-align: center;
+    font-style: italic;
+
+}
+.orderDetailDiv{
+    flex:3;
+    height: 450px;
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    border-radius: 20px;
+    border:1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.08);
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+.orderdeatlshearder{
+    display: flex;
+    flex-direction:column;
+    gap: 10px;
+    padding: 15px;
+    border-bottom: 2px solid #fff;
+}
+.orderInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.orderTotals{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.itemsDiv{
+    display: flex;
+    flex-direction: row
+}
+.morningDiv{
+    flex: 1;
+    border-right: 2px solid #fff;
+}
+.eveningDiv{
+    flex: 1;
+    margin-left: 10px;
+}
+.itemTable{
+    width: 100%;
+}
+.morningDiv h4, .eveningDiv h4{
+    text-align: center;
+    padding-bottom: 10px;
+}

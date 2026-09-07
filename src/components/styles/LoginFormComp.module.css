@@ -1,0 +1,97 @@
+.mainDiv{
+
+    width: 100%;
+    height: auto;
+    overflow: hidden;   
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    
+}
+
+.userProfileImg{
+    border: 3px solid #ffff;
+    border-radius: 100%;
+    margin: 20px 0px 30px 0px;
+    height: 280px;
+    width: 280px;
+}
+
+.orderSelectDiv{
+    
+    height: 450px;
+    width: 50%;
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    border-radius: 20px;
+    border:1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.08);
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:20px;
+
+}
+.orderSelectDiv h1{
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+
+.formRow{
+    display: flex;
+    margin-top:50px; 
+    width: 70%;
+    justify-content: center;
+    
+}
+
+
+.formRow input{
+    flex: 1;
+    background: transparent;
+    outline: none;
+    border: none;
+    color: #fff;
+    border-bottom: 2px solid #fff;
+    font-size: 1.1rem;
+}
+
+.formRow label{
+    flex: 1;
+    font-size: 1.1rem;
+   
+}
+
+
+
+.btnPannel{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.btnPannel button{
+
+    background:transparent;
+    border: none;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    padding: 8px;
+    width: 200px;
+    color: #fff;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    
+
+}
+.btnPannel button:hover{
+
+    background: #fff;
+    color: rgb(0, 0, 0);
+    
+}

@@ -72,7 +72,7 @@ function CreeateVehicleComp() {
                         </div>
 
                         <div className={styles.btnPannel}>
-                            <button onClick={saveVhcldtls}>Save Details</button>
+                            <button onClick={saveVhcldtls}>Save Vehicle</button>
 
                         </div>
 

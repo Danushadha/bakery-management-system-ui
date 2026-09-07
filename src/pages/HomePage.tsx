@@ -17,8 +17,8 @@ function HomePage() {
                 <Header />
 
                 <div className={styles.contentArea}>
-                    <Outlet />
-                    
+                
+                    <Outlet />             
 
 
                 </div>

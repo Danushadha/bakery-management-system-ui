@@ -15,12 +15,13 @@ import PrintOrder from "../components/PrintOrder"
 
 function CreateOrderComponent() {
 
+
     const [showDrpDwn, setShowDrpDwn] = useState(false)
     const [vehicle, setVehicle] = useState<VehicleDtls[]>([])
     const [isMorningSaved, setIsMorningSaved] = useState(false);
     const [isEveningSaved, setIsEveningSaved] = useState(false);
 
-    const [printOrder, setPrintOrder] = useState<PrintOrderData>({})
+    const [printOrder, setPrintOrder] = useState<PrintOrderData | null>(null)
 
     const printRef = useRef<HTMLDivElement>(null)
 
@@ -42,12 +43,14 @@ function CreateOrderComponent() {
         if (!dateTime) return "";
 
         return new Date(dateTime).toLocaleString("en-LK", {
+
             day: "2-digit",
             month: "short",
             year: "numeric",
             hour: "2-digit",
             minute: "2-digit",
             hour12: true
+            
         });
     };
 
@@ -185,6 +188,8 @@ function CreateOrderComponent() {
                 qty: EqtyMap.get(item.id) ?? 0
             }))
         }))
+
+        setPrintOrder(savedOrder)
 
     }
 
@@ -343,6 +348,15 @@ function CreateOrderComponent() {
             return;
         }
 
+        const hasMorning = order.morningItems.some(item=> Number(item.qty)>0)
+        
+        if(!hasMorning){
+            alert("You have not update the Morning Qty...");
+            return;
+        }
+
+        
+
 
         const morningPayload = {
 
@@ -370,6 +384,8 @@ function CreateOrderComponent() {
                 vehicle: saveOrder.vehicle,
                 orderStatus: saveOrder.status,
                 orderDate: saveOrder.orderDate,
+                morningTotal:saveOrder.morningTotal,
+                grandTotal:saveOrder.grandtotal,
 
                 morningItems: prev.morningItems.map(item => {
 
@@ -385,7 +401,16 @@ function CreateOrderComponent() {
 
 
 
+
+
             }))
+
+            if(saveOrder){
+                alert("You have successfully saved the morning order");
+
+            }
+
+            
 
             setIsMorningSaved(true)
 
@@ -405,6 +430,12 @@ function CreateOrderComponent() {
             return;
         }
 
+        const hasEvening = order.eveningItems.some(item=> Number(item.qty)>0)
+        
+        if(!hasEvening){
+            alert("You have not update the  Evenng Qty...");
+            return;
+        }
         const eveningPayload = {
 
             orderId: order.orderId,
@@ -444,6 +475,12 @@ function CreateOrderComponent() {
                 })
 
             }))
+
+            if(savedOrder){
+                
+                alert("You have successfully saved the Evenng Order ...");
+                
+            }
 
             setIsEveningSaved(true)
 
@@ -493,7 +530,6 @@ function CreateOrderComponent() {
 
     const closeOrder = async () => {
 
-        console.log(order.orderId)
 
         if (!order.orderId) {
             alert("You have not saved the order");
@@ -507,50 +543,15 @@ function CreateOrderComponent() {
 
             const closedOrder = response.data
 
+            setOrder(prev=>({
+                ...prev,
+                orderStatus:closedOrder.status
+
+            } ))
+
             setPrintOrder(closedOrder)
 
-            //     const mnQtyMap = new Map<number , number>(
-            //         closedOrder.morningItemsResponseDto.map((item:any)=>[
-            //             item.itemId , item.qty
-            //         ])
-            //     )
-
-
-            //     const evQtyMap = new Map<number , number>(
-            //         closedOrder.eveningItemsResponseDto.map((item:any)=>[
-            //             item.itemId , item.qty
-            //         ])
-            //     )
-    
-
-            // setOrder(prev => ({
-
-            //     ...prev,
-            //     orderId: closedOrder.id,
-            //     orderNo: closedOrder.orderNo,
-            //     vehicle: closedOrder.vehicle,
-            //     orderStatus: closedOrder.status,
-            //     orderDate:closedOrder.orderDate,
-            //     morningTotal:closedOrder.morningTotal,
-            //     eveningTotal:closedOrder.eveningTotal,
-            //     grandTotal:closedOrder.grandtotal,
-
-            //     morningItems:prev.morningItems.map(item=>({
-
-            //         ...item,
-            //         qty:mnQtyMap.get(item.id) ?? 0
-            //     })),
-
-            //     eveningItems:prev.eveningItems.map(item=>({
-
-            //         ...item,
-            //         qty:evQtyMap.get(item.id) ?? 0
-            //     }))
-
-                
-
-            // }))
-
+            
         }
         catch (error) {
             console.log(error)
@@ -575,7 +576,9 @@ function CreateOrderComponent() {
     return (
         <>
 
-        <PrintOrder ref={printRef} printOrder={printOrder}/>
+          <PrintOrder ref={printRef} printOrder={printOrder}/>
+
+        
 
 
             <div className={styles.mainDiv}>

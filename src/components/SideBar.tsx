@@ -1,7 +1,15 @@
 import { NavLink } from "react-router-dom"
 import styles from "./styles/SideBar.module.css"
+
+import { useAuth } from "../context/AuthContext";
+import whiteLogo from "../assets/images/NBLogowhite.jpg"
+
+
 function SideBar() {
 
+    const { user } = useAuth();
+    const userRole = user ?.role ?.replace("ROLE_", "")
+    
 
     return (
         <>
@@ -12,21 +20,36 @@ function SideBar() {
                     <h2>Nethu Bake House</h2>
 
                     <div className={styles.userProfileImg}>
-
+                        <img src={whiteLogo} alt="" />
 
                     </div>
-                    <h3>Admin - Mr. Thushara</h3>
+                    {user && (
+                        <h3>
+                            {userRole} - {user.userName}
+                        </h3>
+                    )}
 
 
                 </div>
                 <div className={styles.sidebarNavBar}>
                     <div className={styles.navLinks}>
 
-                        <NavLink to="/" >Dash Board</NavLink>
-                        <NavLink to="crtOrder" >Create Order</NavLink>
-                        <NavLink to="/order" >Sales Records</NavLink>
-                        <NavLink to="/reports" >Reports</NavLink>
-                        <NavLink to="settings" >Settings</NavLink>
+
+
+                        {user && (
+                            <>
+                                <NavLink to="/" >Home</NavLink>
+                                <NavLink to="crtOrder" >Create Order</NavLink>
+                                <NavLink to="/viewOrders" >Sales Records</NavLink>
+                                <NavLink to="reports" >Reports</NavLink>
+
+                            </>
+                        )}
+
+
+                        {userRole === "ADMIN" && (
+                            <NavLink to="settings"> Settings </NavLink>
+                        )}
 
                     </div>
 

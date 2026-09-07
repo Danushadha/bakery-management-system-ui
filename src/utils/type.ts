@@ -1,9 +1,14 @@
-export interface DriverData{
+export interface UserData{
     id:number;
-    name:string;
-    nic:string;
-    contactNo:string;
+    userName:string;
+    password:string;
 }
+
+export interface LoginData  {
+    userName: string;
+    password: string;
+}
+
 export interface ItemData{
     id:number;
     itemName:string;
@@ -31,12 +36,14 @@ export interface orderedRequestDTO{
     orderedItemsRequestDtoList:orderedItemRequestDto[];
 }
 
-export interface OrderedItemsResponseDto{
+export interface OrderedItemsResponseDto {
     itemId: number;
-    itemName:string;
-    lineTotal:number;
-    qty:number;
-    unitPrice:number;
+    orderId: number;
+    itemName: string;
+    unitPrice: number;
+    lineTotal: number;
+    qty: number;
+    shift: string;
 }
 
 export interface OrderResponseDto{
@@ -45,11 +52,14 @@ export interface OrderResponseDto{
     orderDate:string;
     totalAmount:number;
     vehicle:VehicleDtls;
-    orderStatus:string;
-    orderedItemsResponseDto: OrderedItemsResponseDto[];
+    status:string;
+   
     morningTotal:number;
     eveningTotal:number;
-    grandTotal:number;
+    grandtotal:number;
+
+    morningItemsResponseDto: OrderedItemsResponseDto[];
+    eveningItemsResponseDto: OrderedItemsResponseDto[];
 }
 
 export interface PrintOrderData{

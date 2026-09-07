@@ -1,22 +1,33 @@
 import styles from "./styles/Header.module.css"
-import {NavLink} from "react-router-dom"
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 
 function Header() {
 
+    const { user , logout} = useAuth();
+    const navigate =useNavigate()
+
+    const handleLogout = ()=>{
+
+        logout();
+        navigate("/")
+    }
+    
 
     return (
         <>
 
             <div className={styles.header}>
+                
                 <h1>Bakery Management System</h1>
 
-                <div className={styles.headerNavBar}>
-                    <NavLink to = "/crtOrder" > Create Order</NavLink> / 
-                    <NavLink to = "/viewOrder"> View Orders </NavLink>
                 
-                </div>
+                {user && (
+                    <button className={styles.logOutBtn} onClick={(handleLogout)}>Log Out</button>
+                )}
 
-                <button className={styles.logOutBtn}>Log Out</button>
+                 
 
             </div>
 
