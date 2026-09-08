@@ -300,3 +300,33 @@ input[type="number"] {
     opacity: 0.4;
     cursor: not-allowed;
 }
+@media screen and (max-width: 990px) and (orientation: portrait){
+
+    .pageContainer{
+
+        height: auto;
+        min-height: 100vh; 
+        margin-top:60px;  
+        width: 100%;
+        overflow: visible;   
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        
+       
+    }
+    .mainDiv{
+        min-height:0; 
+        flex-direction: column;
+    }
+    .totalsPannel{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mainBtnPannel{
+        display: flex;
+        flex-direction: column;
+    }
+
+}

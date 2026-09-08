@@ -11,14 +11,21 @@ function HomePage() {
     return (
         <>
 
+
             <div className={styles.mainContainer}>
 
-                <SideBar />
+
+                <div className={styles.sideBar}>
+                    <SideBar />
+
+                </div>
+
+
                 <Header />
 
                 <div className={styles.contentArea}>
-                
-                    <Outlet />             
+
+                    <Outlet />
 
 
                 </div>

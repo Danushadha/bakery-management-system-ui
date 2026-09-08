@@ -8,8 +8,81 @@
     padding: 12px;
     display: flex;
     justify-content: space-between;
+    gap: 10px;
     z-index: 10;
 
+}
+.hamBurgMenu{
+    width: 60px;
+    height: 60px;
+    border: 3px solid #fff;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    display: none;
+    
+}
+.hamBurgMenu span{
+
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+   
+}
+.navBar{
+
+    position: absolute;
+    top:50px;
+    margin:50px ; 
+    height: 450px;
+    width: 90%;
+    border-left:  3px solid #fff; 
+    border-right: 3px solid #fff; 
+    border-bottom: 3px solid #fff; 
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    z-index: 10px;
+    background: rgba(88, 88, 71, 0.8);
+    box-shadow:0 8px 30px rgba(0,0,0);
+   
+    padding-top: 50px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+
+    /* Smooth transition */
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease,
+        visibility 0.35s ease;
+}
+.navBarOpen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.navBarBtn{
+    background:transparent;
+    width: 250px;
+    color: #fff;
+    border: none;
+    outline: none;
+    font-size: 2.2rem;
+      
+}
+.navBarBtn:hover{
+    
+    text-decoration: underline;
+    font-style: italic;
 }
 .logOutBtn{
 
@@ -17,6 +90,7 @@
     color: #fff;
     width: 150px;
     height: 37px;
+    outline: none;
     border:2px solid #fff;
     border-radius: 20px;
     font-size: 1.1rem;
@@ -34,4 +108,19 @@
     display: flex;
     gap:15px;
     padding-top: 12px;
+}
+
+
+@media screen and (max-width: 990px) and (orientation: portrait){
+    .header{
+        width: 100%;
+        left: 0;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .hamBurgMenu{
+        display: flex;
+
+    }
+   
 }

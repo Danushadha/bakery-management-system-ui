@@ -12,7 +12,9 @@ function SideBar() {
     
 
     return (
-        <>
+    <>
+        {user&&(
+            <>
             <div className={styles.sidebar}>
 
                 <div className={styles.userProfile}>
@@ -40,7 +42,7 @@ function SideBar() {
                             <>
                                 <NavLink to="/" >Home</NavLink>
                                 <NavLink to="crtOrder" >Create Order</NavLink>
-                                <NavLink to="/viewOrders" >Sales Records</NavLink>
+                                <NavLink to="viewOrders" >Sales Records</NavLink>
                                 <NavLink to="reports" >Reports</NavLink>
 
                             </>
@@ -64,7 +66,10 @@ function SideBar() {
 
 
         </>
-    )
+
+        )}
+       
+   </> )
 
 
 }

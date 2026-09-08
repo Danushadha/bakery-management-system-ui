@@ -133,7 +133,7 @@ function LoginFormComp() {
 
                     {user&&(
                         <>
-                        <h2>Welcome</h2>
+                        <h1>Welcome</h1>
                         <div className={styles.userProfileImg}>
                         <img src={whiteLogo} alt=""/>
 
