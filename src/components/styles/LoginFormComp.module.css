@@ -148,11 +148,13 @@
     font-size: 2rem;
     width: 100%;
     flex: none;
+    box-sizing: border-box;
 }
 .formRow label{
     font-size: 2rem;
     width: 100%;
     flex: none;
+    box-sizing: border-box;
 }
 .btnPannel button{
     width: 450px;
