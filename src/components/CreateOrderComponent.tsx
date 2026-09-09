@@ -802,7 +802,7 @@ function CreateOrderComponent() {
                 <div className={styles.mainBtnPannel}>
                     <button className={styles.mainBtnPannelBtn} onClick={() => closeOrder()} >Close Order</button>
                     <button className={styles.mainBtnPannelBtn} onClick={handlePrint}>Print Order</button>
-                  
+
                 </div>
 
             </div>
