@@ -1,7 +1,7 @@
 import styles from "./styles/Header.module.css"
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import {useState} from "react"
+import { useState } from "react"
 
 
 function Header() {
@@ -43,16 +43,16 @@ function Header() {
                         <h1>Bakery Management System</h1>
                         <button className={styles.logOutBtn} onClick={(handleLogout)}>Log Out</button>
 
-                        <div  className={`${styles.navBar} ${
-                            isNavOpen ? styles.navBarOpen : ""
-                        }`}>
-                            <button className={styles.navBarBtn} onClick={() => {navigate("/"); setIsNavOpen(false);}}>Home</button>
-                            <button className={styles.navBarBtn} onClick={() => {navigate("crtOrder"); setIsNavOpen(false);}}>Create Orders</button>
-                            <button className={styles.navBarBtn} onClick={() => {navigate("viewOrders"); setIsNavOpen(false);}}>View Order</button>
-                            <button className={styles.navBarBtn} onClick={() => {navigate("reports"); setIsNavOpen(false);}}>Reports</button>
+                        <div className={`${styles.navBar} ${
+                            isNavOpen ? styles.navBarOpen : ""}`}>
+                            
+                            <button className={styles.navBarBtn} onClick={() => { navigate("/"); setIsNavOpen(false); }}>Home</button>
+                            <button className={styles.navBarBtn} onClick={() => { navigate("crtOrder"); setIsNavOpen(false); }}>Create Orders</button>
+                            <button className={styles.navBarBtn} onClick={() => { navigate("viewOrders"); setIsNavOpen(false); }}>View Order</button>
+                            <button className={styles.navBarBtn} onClick={() => { navigate("reports"); setIsNavOpen(false); }}>Reports</button>
 
                             {userRole === "ADMIN" && (
-                                <button className={styles.navBarBtn}>Settings</button>
+                                <button className={styles.navBarBtn} onClick={() => { navigate("settings"); setIsNavOpen(false); }}>Settings</button>
                             )}
 
                         </div>
