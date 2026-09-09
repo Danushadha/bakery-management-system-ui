@@ -137,8 +137,7 @@
 }
 .ItemtableDiv{
     width: 95%;
-    height: 300px;
-    
+    height: 300px;    
     margin-left: 10px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -159,7 +158,7 @@
 }
 .itemTable tbody td:nth-child(1){
     text-align: left;
-    padding:6px 10px; 
+    padding:6px; 
 
 }
 .itemRow{
@@ -303,30 +302,125 @@ input[type="number"] {
 @media screen and (max-width: 990px) and (orientation: portrait){
 
     .pageContainer{
-
-        height: auto;
-        min-height: 100vh; 
-        margin-top:60px;  
+        
+        min-height: auto; 
+        
+        margin-bottom: 150px;
         width: 100%;
-        overflow: visible;   
+      
         display: flex;
         flex-direction: column;
         gap: 15px;
         
+        padding: 10px;
        
     }
     .mainDiv{
-        min-height:0; 
+       
         flex-direction: column;
+        min-height: auto;
     }
+
+
+    .vSlBtn{
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+
+    .vSlBtnDrpDwnBtn{
+        height: 250px;
+        
+        top: 200px;
+        width: 95%;
+    }
+
+    .drpDwnBtn{
+        font-size: 1.9rem;
+        height: 50px;
+    }
+    .orderSummarydtls{
+       
+        min-height: 280px;
+        padding-left: 20px;
+    }
+    .ordSumleft{
+        line-height: 50px;
+        font-size: 1.9rem;
+    }
+    .ordSumRight{
+        line-height: 50px;
+        font-size: 1.9rem;
+
+    }
+    
+    .orderSummaryDiv{
+        min-height: 580px;
+        font-size: 2rem;
+
+    }
+    .morningShift,
+    .eveningShift{
+        padding-top: 20px;
+        font-size: 2rem;
+        
+    }
+
+    .ItemtableDiv{
+       
+        min-height: 100vh;
+        margin-top: 30px;
+        margin-bottom: 30px;
+       
+    }
+
+    
+.itemTable tbody td:nth-child(1){
+    text-align: left;
+    width:40%;
+
+}
+
+.itemTable tbody td:nth-child(2){
+    width:30%;
+}
+.qtyInput{
+    width :80px;
+    font-size: 2rem;
+}
+
+.QtyBtn{
+    
+    width: 50px;
+    height: 70px;
+    color: #fff;
+    font-size: 2rem;
+}
+
+
+.shiftBtn{
+    
+    font-size: 1.5rem;
+    transition: 0.3s ease-in-out;
+}
     .totalsPannel{
-        display: flex;
-        flex-direction: column;
+        width: 100%;
+        display: flex;     
+        flex-wrap: wrap;   
+        justify-content: space-between;
+        
     }
+    .indShftTtlPnl {
+        flex: 0 0 calc(50% - 8px);
+        box-sizing: border-box;
+    }
+
 
     .mainBtnPannel{
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        margin-top:150px;
+       
     }
 
 }
