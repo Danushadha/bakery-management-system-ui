@@ -33,6 +33,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin-top: 10px;
+    
 }
 
 .calendar {
@@ -123,7 +124,7 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-   
+  
 }
 .vehicleBtn{
     width: 100%;
@@ -147,6 +148,7 @@
 .orderDetailDiv{
     flex:3;
     height: 450px;
+    overflow-y: auto;
     backdrop-filter: blur(12px);
     padding: 10px;
     border-radius: 20px;
@@ -193,4 +195,52 @@
 .morningDiv h4, .eveningDiv h4{
     text-align: center;
     padding-bottom: 10px;
+}
+@media screen and (max-width: 990px) and (orientation: portrait){
+
+    .mainDiv{
+        flex-direction: column;
+    }
+
+    
+.orderSelectDiv{
+    
+    min-height: 450px;
+   
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+
+}
+
+
+.orderDetailDiv{
+    width:100%;
+    height: auto;
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    border-radius: 20px;
+    border:1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.08);
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.searchBtn{
+    width: 200px;
+   font-size: 2rem;
+   border-radius: 20px;
+}
+.vehicleBtn{
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+
+}
+.orderSelectDiv h3{
+font-size: 2rem; 
+}
 }
