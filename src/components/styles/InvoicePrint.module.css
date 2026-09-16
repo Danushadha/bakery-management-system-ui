@@ -1,7 +1,6 @@
 .mainContent{
-    width: 108mm;
+    width: 72mm;
     height: auto;
-    
     padding:15px 10px;
     display: flex;
     flex-direction: column;
