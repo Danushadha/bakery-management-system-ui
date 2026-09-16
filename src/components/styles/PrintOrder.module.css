@@ -6,7 +6,7 @@
     .mainDiv{
 
         width: 72mm;
-        
+        border: 4px soild black;
         padding: 10px;
         height: auto;
         display: flex;
@@ -23,8 +23,8 @@
 
 .logoDiv img{
 
-    height: 200px;
-    width:200px;
+    height: 100px;
+    width:100px;
 }
 .heading{
     margin-top: 15px;
