@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://daring-imagination-production-57b7.up.railway.app"
+    baseURL: "https://bakery-management-system-api-production.up.railway.app"
 
    // baseURL: "http://localhost:8082" 
 });
