@@ -62,10 +62,11 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
                     <img src={logo} alt="" />
 
                 </div>
+                
                 <div className={styles.heading}>
 
                     <h2>Nethu Bake House</h2>
-                    <p> #148 Aththidiya Road, Dehiwala-Mount Lavinia <br /> Contact :- 077 759 3669</p>
+                    <p> #152/1 Main Road, Attidiya Dehiwala <br /> Contact :- 076 825 4434</p>
 
                 </div>
                 <div className={styles.orderDtlsHeading}>

@@ -35,7 +35,8 @@ function CreateOrderComponent() {
         eveningItems: [] as ItemData[],
         morningTotal: null as number | null,
         eveningTotal: null as number | null,
-        grandTotal: null as number | null
+        grandTotal: null as number | null,
+        
 
     })
 
@@ -202,7 +203,7 @@ function CreateOrderComponent() {
             orderNo: "",
             vehicle,
             orderStatus: "",
-            orderDate: "",
+           
             morningItems: prev.morningItems.map(item => ({
                 ...item,
                 qty: 0
@@ -362,6 +363,7 @@ function CreateOrderComponent() {
 
             orderId: order.orderId,
             vehicleId: order.vehicle!.id,
+            orderDate:order.orderDate,
             orderedItemsRequestDtoList: order.morningItems
                 .filter(item => Number(item.qty) > 0)
                 .map(item => ({
@@ -440,6 +442,7 @@ function CreateOrderComponent() {
 
             orderId: order.orderId,
             vehicleId: order.vehicle!.id,
+            orderDate:order.orderDate,
             orderedItemsRequestDtoList: order.eveningItems
                 .filter(item => Number(item.qty) > 0)
                 .map(item => ({
@@ -595,6 +598,13 @@ function CreateOrderComponent() {
 
 
                         </button>
+
+                        <input type="date" value={order.orderDate}
+                        onChange={(e)=>
+                        setOrder(prev=>({
+                            ...prev,
+                            orderDate:e.target.value
+                        }))}/>
 
                         <div
                             className={`${styles.vSlBtnDrpDwnBtn} ${
