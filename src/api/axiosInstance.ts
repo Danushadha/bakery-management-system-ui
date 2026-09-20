@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const api = axios.create({
-   // baseURL: "https://bakery-management-system-api-production.up.railway.app"
+    baseURL: "https://bakery-management-system-api-production.up.railway.app"
     
 
-    baseURL: "http://localhost:8082" 
+    //baseURL: "http://localhost:8082" 
 });
 
 api.interceptors.request.use((config) => {
