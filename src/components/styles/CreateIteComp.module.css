@@ -31,7 +31,9 @@
 .imgside{
     flex: 1;
     height: 50vh;
+    position: relative;
     clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 0% 100%);
+    
    
 }
 
@@ -42,6 +44,7 @@
     border-bottom-left-radius:20px;
     border-top-left-radius: 20px;
     object-fit: cover;
+    
     
 }
 
@@ -92,9 +95,121 @@
     color: rgb(0, 0, 0);
     
 }
+.crudBtn{
+    display: flex;
+    width: 100px;
+   gap: 5px;
+    justify-content: space-evenly;
+    position: absolute;
+    right: 10px;
+}
+.crudBtn button{
+    color: #fff;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
 
+}
+.crudBtn button:hover{
+    border-bottom: 2px solid #fff;
+    font-style: italic;
+}
 
+.viewItemsPnl{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    
+    width: 100%;
+    height: 100%;
+ }
+ .itmpnlheader{
+     display: flex;
+    
+     width: 80%;
+     flex-direction: row;
+     justify-content: space-between;
+     margin: 12px 0px 0px 35px;
+     
+ }
+ .itmpnlheader button{
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    
 
+}
+ .viewItemsPnl table{
+    
+    width: 80%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 20px 30px;
+    
+ }
+ .viewItemsPnl thead{
+     display: table;
+     width: 100%;
+     table-layout: fixed;
+     margin-bottom: 10px;
+
+ }
+ .viewItemsPnl tbody {
+    display: block;
+    max-height: 190px;
+    overflow-y: auto;
+  
+}
+.viewItemsPnl tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+ .itmBtn{
+    width: auto;
+    color: #fff;
+    font-size: 1.1rem;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 3px;
+
+}
+.viewItemsPnl table tbody td:nth-child(1),
+ .viewItemsPnl table thead th:nth-child(1){
+    width:30px;
+    text-align: center;
+ }
+ 
+ .viewItemsPnl table tbody td:nth-child(2),
+ .viewItemsPnl table thead th:nth-child(2){
+    text-align: start;
+   padding-left: 10px;
+
+ }
+ 
+ .viewItemsPnl table tbody td:nth-child(3),
+ .viewItemsPnl table thead th:nth-child(3){
+    width:120px;
+    text-align: center;
+   
+ }
+ .viewItemsPnl table thead th:nth-child(3){
+     text-align: start;
+
+ }
+ 
+ .itmBtn:hover{
+     font-style: italic;
+     border-bottom: 2px solid #fff;
+ }
+
+ 
 @media (max-width: 1024px){
     .mainContent{
         height: 85vh;
