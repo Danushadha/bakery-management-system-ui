@@ -155,7 +155,7 @@ function ViewOrdersComponent() {
 
 
                                                     <tr key={item.itemId}>
-                                                        <td>{index+1}</td>
+                                                        <td>{index + 1}</td>
                                                         <td>{item.itemName}</td>
                                                         <td> @ Rs. {Number(item.unitPrice).toFixed(2)}</td>
 
@@ -186,21 +186,21 @@ function ViewOrdersComponent() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {selectedOrder.eveningItemsResponseDto.map((item ,index) => (
+                                                {selectedOrder.eveningItemsResponseDto.map((item, index) => (
 
 
-                                                
+
                                                     <tr key={item.itemId}>
-                                                        <td>{index+1}</td>
+                                                        <td>{index + 1}</td>
                                                         <td>{item.itemName}</td>
                                                         <td> @ Rs. {Number(item.unitPrice).toFixed(2)}</td>
 
                                                         <td>{item.qty}</td>
                                                         <td>{Number(item.lineTotal).toFixed(2)}</td>
                                                     </tr>
-                                                
 
-                                            ))}
+
+                                                ))}
 
                                             </tbody>
                                         </table>
@@ -210,6 +210,13 @@ function ViewOrdersComponent() {
                                 </div>
 
                             </div>
+                            <div className={styles.buttonPannel}>
+
+                                <button>Print Order</button>
+                                <button>Download Order</button>
+
+                            </div>
+
                         </>
                     )}
 

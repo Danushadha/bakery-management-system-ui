@@ -196,6 +196,31 @@
     text-align: center;
     padding-bottom: 10px;
 }
+.buttonPannel{
+    width: 100%;
+    border-top: 2px solid #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+
+}
+.buttonPannel button{
+
+    width: 250px;
+    height: 40px;
+    font-size: 1.3rem; 
+    border: 2px solid #fff;
+    border-radius: 20px;  
+    background:transparent;
+    color: #fff;
+    transition: 0.3s ease-in-out;
+}
+.buttonPannel button:hover{
+    background-color: #fff;
+    transform: scaleX(1.1);
+    color: rgb(95, 91, 91);
+}
 @media screen and (max-width: 990px) and (orientation: portrait){
 
     .mainDiv{
