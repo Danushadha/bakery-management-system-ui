@@ -42,7 +42,7 @@ function SideBar() {
                             <>
                                 <NavLink to="/" >Home</NavLink>
                                 <NavLink to="crtOrder" >Create Order</NavLink>
-                                <NavLink to="viewOrders" >Sales Records</NavLink>
+                                <NavLink to="viewOrders" >View Orders</NavLink>
                                 <NavLink to="reports" >Reports</NavLink>
 
                             </>

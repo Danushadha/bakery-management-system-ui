@@ -10,8 +10,13 @@ type PrintOrderProps = {
 
 const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, ref) => {
 
+   
+
     if (!printOrder) {
+        
         return <div ref={ref} className={styles.mainDiv}></div>
+        
+
     }
 
     const formatDateTime = (dateTime: string) => {

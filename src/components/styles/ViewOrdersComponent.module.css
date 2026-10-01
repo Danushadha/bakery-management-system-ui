@@ -2,8 +2,7 @@
 
     width: 100%;
     height: auto;
-    overflow-x: hidden;   
-    overflow-y: scroll;
+    overflow: hidden;   
     display: flex;
     flex-direction: row;
     gap: 15px;
@@ -148,7 +147,7 @@
 .orderDetailDiv{
     flex:3;
     height: 450px;
-    overflow-y: auto;
+    overflow: hidden;
     backdrop-filter: blur(12px);
     padding: 10px;
     border-radius: 20px;
@@ -179,15 +178,20 @@
 }
 .itemsDiv{
     display: flex;
-    flex-direction: row
+    flex-direction: row;
+    
+    height: 250px;
+   
 }
 .morningDiv{
     flex: 1;
     border-right: 2px solid #fff;
+    overflow-x: auto;
 }
 .eveningDiv{
     flex: 1;
     margin-left: 10px;
+    overflow-x: auto;
 }
 .itemTable{
     width: 100%;
@@ -203,6 +207,7 @@
     flex-direction: row;
     justify-content: space-around;
     padding: 10px;
+
 
 }
 .buttonPannel button{

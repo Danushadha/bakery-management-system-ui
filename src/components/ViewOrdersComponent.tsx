@@ -1,9 +1,12 @@
 import styles from "../components/styles/ViewOrdersComponent.module.css"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { useState } from "react"
+import { useState , useRef } from "react"
 import { getOrderByDate } from "../api/orderApi"
 import type { OrderResponseDto } from "../utils/type"
+import PrintOrder from "../components/PrintOrder"
+import { useReactToPrint } from "react-to-print"
+
 
 function ViewOrdersComponent() {
 
@@ -11,6 +14,8 @@ function ViewOrdersComponent() {
     const [endDate, setEndtDate] = useState<Date | null>(null)
     const [searchedOrder, setSearchedOrder] = useState<OrderResponseDto[]>([])
     const [selectedOrder, setSelectedOrder] = useState<OrderResponseDto | null>(null)
+    const printRef = useRef<HTMLDivElement>(null)
+
 
     const searchOrders = async () => {
 
@@ -52,8 +57,17 @@ function ViewOrdersComponent() {
         }
     }
 
+    const handlePrint = useReactToPrint({
+
+        contentRef: printRef,
+        documentTitle: "Invoice"
+    })
+
+
     return (
         <>
+
+        <PrintOrder ref ={printRef} printOrder={selectedOrder}/>
 
             <div className={styles.mainDiv}>
 
@@ -212,7 +226,7 @@ function ViewOrdersComponent() {
                             </div>
                             <div className={styles.buttonPannel}>
 
-                                <button>Print Order</button>
+                                <button onClick={handlePrint}>Print Order</button>
                                 <button>Download Order</button>
 
                             </div>

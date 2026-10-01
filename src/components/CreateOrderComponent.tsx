@@ -583,7 +583,7 @@ function CreateOrderComponent() {
         <>
 
             <PrintOrder ref={printRef} printOrder={printOrder} />
-
+            
 
 
             <div className={styles.pageContainer}>
