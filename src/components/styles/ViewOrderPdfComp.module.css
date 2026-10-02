@@ -1,0 +1,130 @@
+.mainDiv{
+        position: relative;
+        top: 0;
+        left:0;
+        width: 210mm;
+        min-height: 297mm;
+        border: 2px solid #fff;
+        padding: 5px 15px 0px 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        display: block;
+        font-size: 12px;
+        background-color: #fff;
+        color: black;
+        display: none;
+    }
+
+.heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    border-bottom: 2px solid #000;
+    padding: 10px;
+    font-size: 17px;
+    gap:20px;
+    text-align:right;
+}
+.heading h1{
+    font-size: 40px;
+}
+    
+.logoDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.logoDiv img{
+
+    height: 110px;
+    width:120px;
+}
+.orderContDtlsHeading{
+    display: flex;
+    width:100%;
+    margin-top: 10px;
+    font-size: 15px;
+
+
+}
+.orderContDtlsHeadingleft{
+    flex: 1;
+    text-align: left;  
+    
+}
+
+
+.orderContDtlsHeadingRight{
+    flex:1;
+    text-align: right;
+}
+
+.itemDiv{
+    margin: 40px 0px 0px 0px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+   
+}
+.itemDiv p{
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+.morningItemsTable{
+    flex: 1;
+    width: 100%;
+    border-right: 1px solid #000;
+}
+.eveningItemsTable{
+    flex: 1;
+    width: 100%;
+    
+}
+.itemTable{
+    width: 100%;
+    padding: 0px 10px;
+}
+.itemTable th:nth-child(1){
+text-align: left;
+}
+.itemTable th:nth-child(2),
+.itemTable th:nth-child(3),
+.itemTable td:nth-child(2),
+.itemTable td:nth-child(3){
+    text-align: center;
+    
+   
+}
+
+.itemTable td:nth-child(4),
+.itemTable th:nth-child(4){
+    text-align: right;
+}
+.totalDivs{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: end;
+}
+.signatureDiv{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 100px;
+    padding: 0 10px;
+}
+.signatureBox{
+
+    width: 45%;
+    border-top:1px dotted black;
+    text-align: center;
+}
+

@@ -5,7 +5,9 @@ import { useState , useRef } from "react"
 import { getOrderByDate } from "../api/orderApi"
 import type { OrderResponseDto } from "../utils/type"
 import PrintOrder from "../components/PrintOrder"
+import ViewPdf from "../components/ViewOrderPdfComp"
 import { useReactToPrint } from "react-to-print"
+import html2pdf from "html2pdf.js";
 
 
 function ViewOrdersComponent() {
@@ -15,6 +17,7 @@ function ViewOrdersComponent() {
     const [searchedOrder, setSearchedOrder] = useState<OrderResponseDto[]>([])
     const [selectedOrder, setSelectedOrder] = useState<OrderResponseDto | null>(null)
     const printRef = useRef<HTMLDivElement>(null)
+    const pdfRef = useRef<HTMLDivElement>(null)
 
 
     const searchOrders = async () => {
@@ -60,14 +63,63 @@ function ViewOrdersComponent() {
     const handlePrint = useReactToPrint({
 
         contentRef: printRef,
-        documentTitle: "Invoice"
+        documentTitle: selectedOrder
+        ? `Nethu-Bake-House-${selectedOrder.orderNo}`
+        : "Invoice"
     })
+
+    const handleDownloadPdf = async () => {
+        if (!selectedOrder || !pdfRef.current) {
+            alert("Please select an order first");
+            return;
+        }
+
+        const element = pdfRef.current;
+        element.style.display = "block";
+       
+        const options = {
+            margin: 0,
+            filename: `Nethu-Bake-House-${selectedOrder.orderNo}.pdf`,
+            image: {
+                type: "jpeg" as const,
+                quality: 1
+            },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: "#ffffff"
+            },
+            jsPDF: {
+                unit: "mm",
+                format: "a4",
+                orientation: "portrait" as const
+            },
+            pagebreak: {
+                mode: ["css", "legacy"]
+            }
+        };
+    
+        try {
+           
+            await html2pdf()
+                .set(options)
+                .from(element)
+                .save();
+                element.style.display = "none";
+                
+       
+        } catch (error) {
+            console.error("PDF generation failed:", error);
+            alert("Unable to generate PDF");
+        }
+    };
 
 
     return (
         <>
 
         <PrintOrder ref ={printRef} printOrder={selectedOrder}/>
+        <ViewPdf ref ={pdfRef} printOrder={selectedOrder}/>
 
             <div className={styles.mainDiv}>
 
@@ -227,7 +279,7 @@ function ViewOrdersComponent() {
                             <div className={styles.buttonPannel}>
 
                                 <button onClick={handlePrint}>Print Order</button>
-                                <button>Download Order</button>
+                                <button onClick={handleDownloadPdf}>Download PDF</button>
 
                             </div>
 
