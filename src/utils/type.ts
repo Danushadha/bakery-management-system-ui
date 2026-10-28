@@ -22,6 +22,7 @@ export interface VehicleDtls{
     vehicleNumber:string;
     driverName:string;
     driverId:number;
+    rent:number;
 }
 
 export interface orderedItemRequestDto{
@@ -53,24 +54,27 @@ export interface OrderResponseDto{
     totalAmount:number;
     vehicle:VehicleDtls;
     status:string;
-   
+    vehicleRent: number;
     morningTotal:number;
     eveningTotal:number;
-    grandtotal:number;
-
+    grandTotal:number;
+    
     morningItemsResponseDto: OrderedItemsResponseDto[];
     eveningItemsResponseDto: OrderedItemsResponseDto[];
 }
 
 export interface PrintOrderData{
     id:number;
+    
     orderNo:string;
     orderDate:string;
     vehicle:VehicleDtls;
     status:string;
     morningTotal:number;
     eveningTotal:number;
-    grandtotal:number;
+
+    vehicleRent: number;
+    grandTotal:number;
     morningItemsResponseDto:OrderedItemsResponseDto[];
     eveningItemsResponseDto:OrderedItemsResponseDto[];
 }

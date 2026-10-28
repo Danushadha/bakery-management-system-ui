@@ -1,7 +1,7 @@
 import styles from "../components/styles/ViewOrdersComponent.module.css"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { useState , useRef } from "react"
+import { useState, useRef } from "react"
 import { getOrderByDate } from "../api/orderApi"
 import type { OrderResponseDto } from "../utils/type"
 import PrintOrder from "../components/PrintOrder"
@@ -64,8 +64,8 @@ function ViewOrdersComponent() {
 
         contentRef: printRef,
         documentTitle: selectedOrder
-        ? `Nethu-Bake-House-${selectedOrder.orderNo}`
-        : "Invoice"
+            ? `Nethu-Bake-House-${selectedOrder.orderNo}`
+            : "Invoice"
     })
 
     const handleDownloadPdf = async () => {
@@ -76,7 +76,7 @@ function ViewOrdersComponent() {
 
         const element = pdfRef.current;
         element.style.display = "block";
-       
+
         const options = {
             margin: 0,
             filename: `Nethu-Bake-House-${selectedOrder.orderNo}.pdf`,
@@ -98,16 +98,16 @@ function ViewOrdersComponent() {
                 mode: ["css", "legacy"]
             }
         };
-    
+
         try {
-           
+
             await html2pdf()
                 .set(options)
                 .from(element)
                 .save();
-                element.style.display = "none";
-                
-       
+            element.style.display = "none";
+
+
         } catch (error) {
             console.error("PDF generation failed:", error);
             alert("Unable to generate PDF");
@@ -118,8 +118,8 @@ function ViewOrdersComponent() {
     return (
         <>
 
-        <PrintOrder ref ={printRef} printOrder={selectedOrder}/>
-        <ViewPdf ref ={pdfRef} printOrder={selectedOrder}/>
+            <PrintOrder ref={printRef} printOrder={selectedOrder} />
+            <ViewPdf ref={pdfRef} printOrder={selectedOrder} />
 
             <div className={styles.mainDiv}>
 
@@ -156,7 +156,7 @@ function ViewOrdersComponent() {
 
                         <>
                             <div>
-                                <h3>Select your Order </h3>
+                                <h3>Select the Vehicle </h3>
                             </div>
 
                             <div className={styles.selectedorders}>
@@ -196,7 +196,12 @@ function ViewOrdersComponent() {
 
                                     <p>Morning Total :-  Rs.{Number(selectedOrder.morningTotal).toFixed(2)}</p>
                                     <p>Evening Total :-  Rs. {Number(selectedOrder.eveningTotal).toFixed(2)}</p>
-                                    <p>Grand Total :-  Rs {Number(selectedOrder.grandtotal).toFixed(2)}</p>
+                                    {Number(selectedOrder.vehicleRent) > 0 && (
+                                        <p>
+                                            Vehicle Rent :- Rs. {Number(selectedOrder.vehicleRent).toFixed(2)}
+                                        </p>
+                                    )}
+                                    <p>Grand Total :-  Rs {Number(selectedOrder.grandTotal).toFixed(2)}</p>
 
                                 </div>
                             </div>

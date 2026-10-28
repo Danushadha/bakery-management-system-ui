@@ -6,7 +6,7 @@ import { getAllItems } from "../api/itemApi"
 import { getAllVcl } from "../api/vhclApi"
 import { saveMorningOrder } from "../api/orderApi"
 import { saveEveningOrder } from "../api/orderApi"
-import { getTodayOrder } from "../api/orderApi"
+import { getOrderByVehicleAndDate } from "../api/orderApi"
 import { getCloseAndInvoiceDtls } from "../api/orderApi"
 import PrintOrder from "../components/PrintOrder"
 
@@ -20,6 +20,7 @@ function CreateOrderComponent() {
     const [vehicle, setVehicle] = useState<VehicleDtls[]>([])
     const [isMorningSaved, setIsMorningSaved] = useState(false);
     const [isEveningSaved, setIsEveningSaved] = useState(false);
+
 
     const [printOrder, setPrintOrder] = useState<PrintOrderData | null>(null)
 
@@ -35,8 +36,9 @@ function CreateOrderComponent() {
         eveningItems: [] as ItemData[],
         morningTotal: null as number | null,
         eveningTotal: null as number | null,
+        vehicleRent: null as number | null,
         grandTotal: null as number | null,
-        
+
 
     })
 
@@ -65,9 +67,9 @@ function CreateOrderComponent() {
                 const itemData = await getAllItems()
 
                 // const displayOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]
-                
+
                 // const displayOrdereditems = displayOrder.map(displayOrderId=>itemData.find(item=>) )
-                
+
                 const morningItems = itemData.data.map((item: ItemData) => ({
                     ...item,
                     qty: 0
@@ -109,6 +111,11 @@ function CreateOrderComponent() {
 
     }
     const handleSelectVehicle = async (vehicle: VehicleDtls) => {
+        if (!order.orderDate) {
+            return alert("Select a Date First")
+        }
+
+
 
         setIsMorningSaved(false)
         setIsEveningSaved(false)
@@ -121,7 +128,7 @@ function CreateOrderComponent() {
 
         try {
 
-            const response = await getTodayOrder(vehicle.id)
+            const response = await getOrderByVehicleAndDate(vehicle.id , order.orderDate)
             console.log("Today Order Response");
             console.log(response.data);
 
@@ -180,8 +187,9 @@ function CreateOrderComponent() {
             orderNo: savedOrder.orderNo,
             vehicle: savedOrder.vehicle,
             orderStatus: savedOrder.status,
-            orderDate: savedOrder.orderDate,
-
+            orderDate: savedOrder.orderDate
+                ? savedOrder.orderDate.slice(0, 10)
+                : prev.orderDate,
             morningItems: prev.morningItems.map(item => ({
                 ...item,
                 qty: MqtyMap.get(item.id) ?? 0
@@ -206,7 +214,7 @@ function CreateOrderComponent() {
             orderNo: "",
             vehicle,
             orderStatus: "",
-           
+
             morningItems: prev.morningItems.map(item => ({
                 ...item,
                 qty: 0
@@ -331,6 +339,32 @@ function CreateOrderComponent() {
 
     }
 
+
+    const getVehicleRentDisplay = () => {
+        const hasMorning = order.morningItems.some(item => Number(item.qty) > 0)
+        const hasEvening = order.eveningItems.some(item => Number(item.qty) > 0)
+
+
+        const fullRent = order.vehicle ?.rent ?? 0;
+
+        if (hasMorning && hasEvening) {
+            return fullRent
+
+
+        }
+
+        if (hasMorning || hasEvening) {
+            return fullRent / 2
+
+
+        }
+
+
+        return 0
+
+    }
+
+
     const morningTotal = order.morningItems.reduce((total, item) => {
         return total + (Number(item.price) * Number(item.qty || 0));
     }, 0);
@@ -339,8 +373,8 @@ function CreateOrderComponent() {
         return total + (Number(item.price) * Number(item.qty || 0));
     }, 0);
 
-    const grandTotal = morningTotal + eveningTotal;
-
+    const vehicleRent = getVehicleRentDisplay();
+    const grandTotal = morningTotal + eveningTotal + vehicleRent;
 
 
 
@@ -366,7 +400,7 @@ function CreateOrderComponent() {
 
             orderId: order.orderId,
             vehicleId: order.vehicle!.id,
-            orderDate:order.orderDate,
+            orderDate: order.orderDate,
             orderedItemsRequestDtoList: order.morningItems
                 .filter(item => Number(item.qty) > 0)
                 .map(item => ({
@@ -445,7 +479,7 @@ function CreateOrderComponent() {
 
             orderId: order.orderId,
             vehicleId: order.vehicle!.id,
-            orderDate:order.orderDate,
+            orderDate: order.orderDate,
             orderedItemsRequestDtoList: order.eveningItems
                 .filter(item => Number(item.qty) > 0)
                 .map(item => ({
@@ -496,6 +530,7 @@ function CreateOrderComponent() {
             console.log(error)
         }
     }
+
     const getShiftDisplay = () => {
 
         const hasMorning = order.morningItems.some(item => Number(item.qty) > 0)
@@ -506,6 +541,7 @@ function CreateOrderComponent() {
 
         if (hasMorning) {
             shift = "Morning"
+
         }
 
         if (hasEvening) {
@@ -583,7 +619,7 @@ function CreateOrderComponent() {
         <>
 
             <PrintOrder ref={printRef} printOrder={printOrder} />
-            
+
 
 
             <div className={styles.pageContainer}>
@@ -591,8 +627,17 @@ function CreateOrderComponent() {
                     <div className={styles.orderSummaryDiv}>
 
                         <h3>Order Details</h3>
+                        <p>Select Date and Vehicle</p>
 
-                        <p>Select Vehicle</p>
+                        <input type="date" value={order.orderDate}
+                            onChange={(e) =>
+                                setOrder(prev => ({
+                                    ...prev,
+                                    orderDate: e.target.value
+                                }))} />
+
+
+
                         <button className={styles.vSlBtn} onClick={toggleDrpDwn}>
                             {order.vehicle
                                 ? `${order.vehicle.vehicleNumber} - ${order.vehicle.driverName}`
@@ -602,12 +647,6 @@ function CreateOrderComponent() {
 
                         </button>
 
-                        <input type="date" value={order.orderDate}
-                        onChange={(e)=>
-                        setOrder(prev=>({
-                            ...prev,
-                            orderDate:e.target.value
-                        }))}/>
 
                         <div
                             className={`${styles.vSlBtnDrpDwnBtn} ${
@@ -644,6 +683,7 @@ function CreateOrderComponent() {
                                 <p>{order.vehicle ?.vehicleNumber}</p>
                                 <p>{order ?.orderNo}</p>
                                 <p>{formatDateTime(order ?.orderDate)}</p>
+
                                 <p>{totalItems}</p>
                                 <p>{getShiftDisplay()}</p>
                                 <p>{order ?.orderStatus}</p>
@@ -793,6 +833,24 @@ function CreateOrderComponent() {
                         </div>
 
                     </div>
+
+                    <div className={styles.indShftTtlPnl}>
+
+                        <div className={styles.indShftTtlPnlIcn}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={styles.shftIcn}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm10.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM3 6.75h11.25v10.5H3V6.75Zm11.25 3h3.375l3.375 3.375v4.125h-6.75V9.75Z" />
+                            </svg>
+
+                        </div>
+
+                        <div className={styles.indShftTtlPnlTxt}>
+                            <p>Vehicle Rent </p>
+                            <h1>Rs. {getVehicleRentDisplay().toFixed(2)}</h1>
+
+                        </div>
+
+
+                    </div>
                     <div className={styles.indShftTtlPnl}>
 
                         <div className={styles.indShftTtlPnlIcn}>
@@ -803,7 +861,7 @@ function CreateOrderComponent() {
                         </div>
 
                         <div className={styles.indShftTtlPnlTxt}>
-                            <p>Grand Total (Both Shifts) </p>
+                            <p>Grand Total <br />(Both Shifts &  Vehicle Rent) </p>
                             <h1>Rs. {grandTotal.toFixed(2)}</h1>
 
                         </div>

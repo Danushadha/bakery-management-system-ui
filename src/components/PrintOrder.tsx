@@ -10,12 +10,12 @@ type PrintOrderProps = {
 
 const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, ref) => {
 
-   
+
 
     if (!printOrder) {
-        
+
         return <div ref={ref} className={styles.mainDiv}></div>
-        
+
 
     }
 
@@ -34,6 +34,7 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
 
     const hasMorning = printOrder.morningItemsResponseDto.some(item => Number(item.qty) > 0)
     const hasEvening = printOrder.eveningItemsResponseDto.some(item => Number(item.qty) > 0)
+    const hasVhclRnt = printOrder.vehicleRent > 0
 
     const getShiftDisplay = () => {
 
@@ -67,7 +68,7 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
                     <img src={logo} alt="" />
 
                 </div>
-                
+
                 <div className={styles.heading}>
 
                     <h2>Nethu Bake House</h2>
@@ -226,11 +227,23 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
 
 
                 </div>
+                <div className={styles.hasVhclRntDiv}>
+
+                    {hasVhclRnt && (
+                        <>
+                            <p><strong>Vehicle Rent</strong> </p>
+
+                            {Number(printOrder.vehicleRent).toFixed(2)}
+
+
+                        </>
+                    )}
+                </div>
                 <div className={styles.grdtotalDiv}>
 
                     <p><strong>Grand Total</strong> </p>
 
-                    {Number(printOrder.grandtotal).toFixed(2)}
+                    {Number(printOrder.grandTotal).toFixed(2)}
 
                 </div>
 
@@ -238,11 +251,11 @@ const PrintOrder = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrder }, 
 
                     <div className={styles.signatureBox}>
 
-                       
+
                         <p>Prepared By</p>
                     </div>
                     <div className={styles.signatureBox}>
-                        
+
                         <p>Approved By</p>
                     </div>
                 </div>
