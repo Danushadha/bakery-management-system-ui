@@ -114,8 +114,9 @@
 .orderSelectDiv{
     height: 50%;
     width: 90%;    
-    gap:20px;
+    gap:10px;
     margin-top: 150px;
+    
    
 
 }
@@ -139,8 +140,9 @@
     padding: 0px 55px ;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     align-items: stretch;
+    
     
 }
 
@@ -164,8 +166,8 @@
 }
 .userProfileImg{
     
-    height: 400px;
-    width: 400px;
+    height: 340px;
+    width: 340px;
     margin:  0px;
     
    

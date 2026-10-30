@@ -118,7 +118,7 @@
 
 .selectedorders{
     width:100%;
-    height: 440px;
+    height: 350px;
     overflow-x: hidden;
     overflow-y: auto;
     display: flex;

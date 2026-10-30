@@ -2,9 +2,9 @@
 function RportsComp(){
 
     return(
-        <>
-        this is Reports
-        </>
+        <>     <h1>This page under construction</h1>
+        
+           </>
     )
 }
 export default RportsComp
