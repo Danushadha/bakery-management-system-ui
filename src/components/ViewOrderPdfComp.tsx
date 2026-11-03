@@ -95,7 +95,7 @@ const ViewOrderPdfComp = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrd
                     <div className={styles.orderContDtlsHeadingRight}>
                         <p><strong>Date :- </strong>{formatDateTime(printOrder.orderDate)}</p>
                         <p> <strong>Shift :- </strong> {getShiftDisplay()}</p>
-
+                        
                     </div>
                 </div>
 
@@ -204,7 +204,7 @@ const ViewOrderPdfComp = forwardRef<HTMLDivElement, PrintOrderProps>(({ printOrd
                 <div className={styles.totalDivs}>
                     <p><strong> Morning Total :- </strong>Rs. {Number(printOrder.morningTotal).toFixed(2)}</p>
                     <p><strong> Evening Total :- </strong>Rs. {Number(printOrder.eveningTotal).toFixed(2)}</p>
-                    {Number(printOrder.vehicleRent) > 0 && (
+                    {printOrder.vehicleRent > 0 && (
                         <p>
                             <strong> Vehicle Rent :- </strong>
                             Rs. {Number(printOrder.vehicleRent).toFixed(2)}

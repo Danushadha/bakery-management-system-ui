@@ -1,7 +1,7 @@
 import styles from "../components/styles/CreeateVehicleComp.module.css"
 import type { VehicleDtls } from "../utils/type"
 import { useState } from "react"
-import { saveVhcl, getAllVcl } from "../api/vhclApi"
+import { saveVhcl, getAllVcl , updtVhcl } from "../api/vhclApi"
 import VehicleImg from "../assets/images/vehicleImg.jpg"
 
 
@@ -14,7 +14,7 @@ function CreeateVehicleComp() {
         rent: 0
 
     })
-    const [changeName, setChangName] = useState("saveVhcl")
+    const [changeName, setChangName] = useState("Save Vehicle")
     const [loadedVhcls, setLoadedVhcls] = useState<VehicleDtls[]>([])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,13 +27,33 @@ function CreeateVehicleComp() {
 
     }
 
-    const saveVhcldtls = async () => {
+    const crudHandle = async () => {
+
 
         try {
 
+            if (changeName === "Save Vehicle") {
+                const response = await saveVhcl(vehicle)
+                console.log(response.data)
 
-            const response = await saveVhcl(vehicle)
-            console.log(response.data)
+
+            }
+
+            if(changeName === "Update Vehicle"){
+                if(vehicle.id<1){
+                    alert("you've not selected a vehicle")
+                    return
+
+                }
+
+                const response = await updtVhcl(vehicle)
+                console.log(response.data)
+
+                
+            }
+
+
+
 
 
 
@@ -62,12 +82,27 @@ function CreeateVehicleComp() {
 
     const editVhcl = async () => {
 
-        setChangName("updateVhcl")
+        setChangName("Update Vehicle")
         await loadAllVhcls()
 
     }
 
-   
+    const clsEdit = async () => {
+
+        setChangName("Save Vehicle")
+
+        setVehicle({
+            id: 0,
+            vehicleNumber: "",
+            driverName: "",
+            driverId: 0,
+            rent: 0
+        })
+
+
+    }
+
+
 
     return (
         <>
@@ -77,7 +112,6 @@ function CreeateVehicleComp() {
                 <div className={styles.formContent}>
                     <div className={styles.crudBtns}>
                         <button onClick={editVhcl}>Edit</button>
-
 
                     </div>
 
@@ -105,7 +139,7 @@ function CreeateVehicleComp() {
                         </div>
 
                         <div className={styles.btnPannel}>
-                            <button onClick={saveVhcldtls}>Save Vehicle</button>
+                            <button onClick={crudHandle}>{changeName}</button>
 
                         </div>
 
@@ -116,11 +150,11 @@ function CreeateVehicleComp() {
 
                         <div className={styles.allVhclDiv}>
 
-                            {changeName == "updateVhcl" && (
+                            {changeName == "Update Vehicle" && (
                                 <>
                                     <div className={styles.updtVhcHeading}>
                                         <p>Select Vehicle </p>
-                                        <button className={styles.clsBtn}>X</button>
+                                        <button className={styles.clsBtn} onClick={clsEdit}>X</button>
                                     </div>
 
                                     <div className={styles.vhclTbl}>
@@ -142,10 +176,10 @@ function CreeateVehicleComp() {
 
                                                         <tr key={vhcl.id}>
 
-                                                            <td>{index + 1}</td>
-                                                            <td>{vhcl.vehicleNumber}</td>
-                                                            <td>{vhcl.driverName}</td>
-                                                            <td>{vhcl.rent}</td>
+                                                            <td><button className={styles.eidtBtn} onClick={() => setVehicle(vhcl)}>{index + 1}</button></td>
+                                                            <td><button className={styles.eidtBtn} onClick={() => setVehicle(vhcl)}>{vhcl.vehicleNumber}</button></td>
+                                                            <td><button className={styles.eidtBtn} onClick={() => setVehicle(vhcl)}>{vhcl.driverName}</button></td>
+                                                            <td><button className={styles.eidtBtn} onClick={() => setVehicle(vhcl)}>{Number(vhcl.rent).toFixed(2)}</button></td>
 
                                                         </tr>
                                                     ))

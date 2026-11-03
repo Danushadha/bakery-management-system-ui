@@ -49,7 +49,7 @@ function ViewOrdersComponent() {
                 end
             )
 
-            console.log(response.data)
+            console.log("serched Order", response.data)
 
             setSearchedOrder(response.data)
 
