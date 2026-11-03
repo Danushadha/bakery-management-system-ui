@@ -1,0 +1,132 @@
+.overlay{
+
+    position:fixed;
+    inset:0;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(30, 37, 13, 0.7);
+}
+
+.modal{
+
+    max-width: calc(100% - 40px);
+    height: 450px;    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    animation: modalAppear 0.3s ease-out;    
+    
+}
+.modalHeading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.modal img{
+
+    width: 220px;
+    height: 220px;
+    
+}
+
+
+.modal h1{
+        
+    text-align: center;
+   
+}
+
+.spinner{
+    margin-top:-80px;
+    margin-left: -150px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.25);
+    border-top: 5px solid white;
+    border-right: 5px solid #fff;
+    animation: spin 0.8s linear infinite;
+}
+
+.orderNoDiv{
+    margin-top:-80px;
+    margin-left: -150px;
+}
+.ClsBtn{
+
+    outline: none;
+    background: transparent;
+    width: 160px;
+    height: 40px;
+    color: #fff;
+    font-size: 1.2rem;
+    border: 2px solid #fff; 
+    border-radius: 20px;
+    
+
+}
+.ClsBtn:hover{
+    background: #fff;
+    color:  rgba(182, 201, 152, 8)
+}
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media screen and (max-width: 990px) and (orientation: portrait){
+
+    .modal{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;    
+        align-items: center;
+        gap: 40px;
+    }
+    .modalHeading{
+        flex-direction: column;
+    }
+
+    
+.orderNoDiv{
+    margin-top:10px;
+    width: 100%;
+    text-align: right;
+   
+}
+    
+    .ClsBtn{
+        font-size: 2rem;
+        width: 190px;
+        height: 55px;
+    }
+    
+}

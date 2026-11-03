@@ -9,6 +9,7 @@ import { saveEveningOrder } from "../api/orderApi"
 import { getOrderByVehicleAndDate } from "../api/orderApi"
 import { getCloseAndInvoiceDtls } from "../api/orderApi"
 import PrintOrder from "../components/PrintOrder"
+import OrderConfirmationModal from "../components/OrderConfirmationModal"
 
 
 
@@ -20,6 +21,14 @@ function CreateOrderComponent() {
     const [vehicle, setVehicle] = useState<VehicleDtls[]>([])
     const [isMorningSaved, setIsMorningSaved] = useState(false);
     const [isEveningSaved, setIsEveningSaved] = useState(false);
+
+    const [savingShift, setSavingShift] = useState<"morning" | "evening" | null>(null)
+    const [saveSucess, setSaveSuccess] = useState (false)
+    const [confirmationOrderNo , setConfirmationOrderNo] = useState("")
+
+    const isSaving = savingShift !== null;
+
+    const saveLockRef = useRef(false)
 
 
     const [printOrder, setPrintOrder] = useState<PrintOrderData | null>(null)
@@ -381,6 +390,8 @@ function CreateOrderComponent() {
 
     const saveorderMorning = async () => {
 
+        if (saveLockRef.current) return 
+
         if (!order.vehicle) {
             alert("Please select a vehicle...");
             return;
@@ -411,10 +422,18 @@ function CreateOrderComponent() {
         }
 
         try {
+
+            saveLockRef.current = true;
+
+            setSavingShift("morning")
+
             const response = await saveMorningOrder(morningPayload)
             console.log("morning response", response.data)
 
             const saveOrder = response.data
+
+            setConfirmationOrderNo(saveOrder.orderNo)
+            setSaveSuccess(true)
 
             setOrder(prev => ({
                 ...prev,
@@ -437,17 +456,9 @@ function CreateOrderComponent() {
                     }
 
                 })
-
-
-
-
-
             }))
 
-            if (saveOrder) {
-                alert("You have successfully saved the morning order");
-
-            }
+            
 
 
 
@@ -456,13 +467,21 @@ function CreateOrderComponent() {
         }
 
         catch (error) {
-            console.log(error)
+            console.log("Morning order saved failed", error)
+        }
+
+        finally{
+           
+            saveLockRef.current=false
+            setSavingShift(null)
         }
 
 
     }
 
     const saveOrderEvening = async () => {
+
+        if(saveLockRef.current) return
 
         if (!order.vehicle) {
             alert("Please select a vehicle.");
@@ -491,9 +510,15 @@ function CreateOrderComponent() {
 
         try {
 
+            saveLockRef.current = true;
+            setSavingShift("evening")
+
             const response = await saveEveningOrder(eveningPayload)
             console.log("evening response", response.data)
             const savedOrder = response.data
+
+            setConfirmationOrderNo(savedOrder.orderNo)
+            setSaveSuccess(true)
 
             setOrder(prev => ({
                 ...prev,
@@ -518,8 +543,7 @@ function CreateOrderComponent() {
 
             if (savedOrder) {
 
-                alert("You have successfully saved the Evenng Order ...");
-
+                
             }
 
             setIsEveningSaved(true)
@@ -528,6 +552,12 @@ function CreateOrderComponent() {
 
         catch (error) {
             console.log(error)
+        }
+
+        finally{
+
+            setSavingShift(null);
+            saveLockRef.current = false;
         }
     }
 
@@ -617,6 +647,15 @@ function CreateOrderComponent() {
 
     return (
         <>
+
+        <OrderConfirmationModal 
+        
+        isOpen={isSaving || saveSucess} 
+        isLoading = {isSaving}
+        orderNo = {confirmationOrderNo}
+        isClose ={() =>setSaveSuccess(false)}
+
+        />
 
             <PrintOrder ref={printRef} printOrder={printOrder} />
 
@@ -738,8 +777,8 @@ function CreateOrderComponent() {
 
                         </div>
                         <div className={styles.btnPnl}>
-                            <button className={styles.shiftBtn} disabled={!order.orderId || order.orderStatus === "CLOSE"} onClick={() => setIsMorningSaved(false)} >Edit</button>
-                            <button className={styles.shiftBtn} onClick={saveorderMorning} disabled={isMorningSaved || order.orderStatus === "CLOSE"}>Save</button>
+                            <button className={styles.shiftBtn} disabled={isSaving||!order.orderId || order.orderStatus === "CLOSE"} onClick={() => setIsMorningSaved(false)} >Edit</button>
+                            <button className={styles.shiftBtn} onClick={saveorderMorning} disabled={isSaving ||isMorningSaved || order.orderStatus === "CLOSE"}>Save</button>
 
                         </div>
 
@@ -788,8 +827,8 @@ function CreateOrderComponent() {
                         </div>
                         <div className={styles.btnPnl}>
 
-                            <button className={styles.shiftBtn} disabled={!order.orderId || order.orderStatus === "CLOSE"} onClick={() => setIsEveningSaved(false)}>Edit</button>
-                            <button className={styles.shiftBtn} onClick={saveOrderEvening} disabled={isEveningSaved || order.orderStatus === "CLOSE"}>Save</button>
+                            <button className={styles.shiftBtn} disabled={isSaving || !order.orderId || order.orderStatus === "CLOSE"} onClick={() => setIsEveningSaved(false)}>Edit</button>
+                            <button className={styles.shiftBtn} onClick={saveOrderEvening} disabled={isSaving || isEveningSaved || order.orderStatus === "CLOSE"}>Save</button>
 
                         </div>
 
