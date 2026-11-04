@@ -33,11 +33,7 @@ function CreateIteComp() {
 
     const crudhandle = async () => {
 
-        //this prevents user type without selecting a item
-        if (itemdata.id < 1) {
-            alert("You've not select a Item")
-            return
-        }
+
         try {
 
             if (changeName === "Save Item") {
@@ -50,6 +46,11 @@ function CreateIteComp() {
 
             }
             if (changeName === "Update Item") {
+                //this prevents user type without selecting a item
+                if (itemdata.id < 1) {
+                    alert("You've not select a Item")
+                    return
+                }
 
 
                 const response = await updateItem(itemdata)
@@ -184,10 +185,10 @@ function CreateIteComp() {
                         </div>
                         <div className={styles.formRow}>
                             <label>Item Name :-</label>
-                            <input type="text" name="itemName" value={itemdata.itemName} 
-                            onChange={handleChange} 
-                            autoComplete="off"
-                            disabled={changeName === "Disable Item"}
+                            <input type="text" name="itemName" value={itemdata.itemName}
+                                onChange={handleChange}
+                                autoComplete="off"
+                                disabled={changeName === "Disable Item"}
                             />
 
                         </div>
@@ -197,10 +198,10 @@ function CreateIteComp() {
                             <label>Price :- </label>
 
                             <input type="text" name="price"
-                             value={itemdata.price} 
-                             onChange={handleChange}
-                              autoComplete="off"
-                              disabled={changeName === "Disable Item"} />
+                                value={itemdata.price}
+                                onChange={handleChange}
+                                autoComplete="off"
+                                disabled={changeName === "Disable Item"} />
 
                         </div>
                         <div className={styles.btnPannel}>
