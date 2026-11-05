@@ -120,6 +120,8 @@ function CreateOrderComponent() {
 
     }
     const handleSelectVehicle = async (vehicle: VehicleDtls) => {
+        console.log("1. Selected date before vehicle selection:", order.orderDate);
+       
         if (!order.orderDate) {
             return alert("Select a Date First")
         }
@@ -140,6 +142,10 @@ function CreateOrderComponent() {
             const response = await getOrderByVehicleAndDate(vehicle.id , order.orderDate)
             console.log("Today Order Response");
             console.log(response.data);
+
+            console.log("2. Date sent to backend:", order.orderDate);
+
+            console.log("3. Backend response:", response.data);
 
 
             if (response.data) {
@@ -196,9 +202,7 @@ function CreateOrderComponent() {
             orderNo: savedOrder.orderNo,
             vehicle: savedOrder.vehicle,
             orderStatus: savedOrder.status,
-            orderDate: savedOrder.orderDate
-                ? savedOrder.orderDate.slice(0, 10)
-                : prev.orderDate,
+            
             morningItems: prev.morningItems.map(item => ({
                 ...item,
                 qty: MqtyMap.get(item.id) ?? 0
