@@ -417,7 +417,7 @@ function CreateOrderComponent() {
             vehicleId: order.vehicle!.id,
             orderDate: order.orderDate,
             orderedItemsRequestDtoList: order.morningItems
-                .filter(item => Number(item.qty) > 0)
+                //.filter(item => Number(item.qty) > 0)
                 .map(item => ({
                     itemId: item.id,
                     qty: Number(item.qty)
@@ -504,7 +504,7 @@ function CreateOrderComponent() {
             vehicleId: order.vehicle!.id,
             orderDate: order.orderDate,
             orderedItemsRequestDtoList: order.eveningItems
-                .filter(item => Number(item.qty) > 0)
+                //.filter(item => Number(item.qty) > 0)
                 .map(item => ({
                     itemId: item.id,
                     qty: Number(item.qty)
